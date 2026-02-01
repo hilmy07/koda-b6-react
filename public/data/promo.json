@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "title": "HAPPY MOTHER'S DAY!",
+    "subtitle": "Get one of our favorite menu for free!",
+    "cta": "Klaim Kupon",
+    "bg": "bg-[#8DBB8E]",
+    "image": "",
+    "emoji": "🧕"
+  },
+  {
+    "id": 2,
+    "title": "HAPPY MOTHER'S DAY!",
+    "subtitle": "Get one of our favorite menu for free!",
+    "cta": "Klaim Kupon",
+    "bg": "bg-[#8DBB8E]",
+    "image": "",
+    "emoji": "🧕"
+  },
+  {
+    "id": 3,
+    "title": "HAPPY MOTHER'S DAY!",
+    "subtitle": "Get one of our favorite menu for free!",
+    "cta": "Klaim Kupon",
+    "bg": "bg-[#8DBB8E]",
+    "image": "",
+    "emoji": "🧕"
+  },
+  {
+    "id": 4,
+    "title": "Get a cup of coffee for free on sunday morning",
+    "subtitle": "Only at 7 to 9 AM",
+    "cta": "Klaim Kupon",
+    "bg": "bg-[#F3B047]",
+    "image": "",
+    "emoji": "☕"
+  },
+  {
+    "id": 5,
+    "title": "Special Week Deal!",
+    "subtitle": "Buy 1 get 1 selected menu",
+    "cta": "Klaim Kupon",
+    "bg": "bg-[#8DBB8E]",
+    "image": "",
+    "emoji": "🫘"
+  }
+]

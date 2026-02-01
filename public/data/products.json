@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "Hazelnut Latte",
+    "description": "You can explore the menu that we provide with fun and have their own taste and make your day better",
+    "price": "IDR 20.000",
+    "image": "product1.png"
+  },
+  {
+    "id": 2,
+    "name": "Espresso",
+    "description": "You can explore the menu that we provide with fun and have their own taste and make your day better",
+    "price": "IDR 20.000",
+    "image": "product2.png"
+  },
+  {
+    "id": 3,
+    "name": "Cappuccino",
+    "description": "You can explore the menu that we provide with fun and have their own taste and make your day better",
+    "price": "IDR 20.000",
+    "image": "product3.png"
+  },
+  {
+    "id": 4,
+    "name": "Mocha",
+    "description": "You can explore the menu that we provide with fun and have their own taste and make your day better",
+    "price": "IDR 20.000",
+    "image": "product4.png"
+  },
+  {
+    "id": 5,
+    "name": "Cappuccino",
+    "description": "You can explore the menu that we provide with fun and have their own taste and make your day better",
+    "price": "IDR 20.000",
+    "image": "product5.png"
+  },
+  {
+    "id": 6,
+    "name": "Mocha",
+    "description": "You can explore the menu that we provide with fun and have their own taste and make your day better",
+    "price": "IDR 20.000",
+    "image": "product6.png"
+  }
+]
