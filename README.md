@@ -1,16 +1,25 @@
-# React + Vite
+<img width="1900" height="868" alt="image" src="https://github.com/user-attachments/assets/fa4fe540-9435-4fb2-8b22-c9cb5dd35405" />
+LoginPage
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img width="1901" height="866" alt="image" src="https://github.com/user-attachments/assets/d8313128-4cad-4fba-aec0-f6e326bd1a6c" />
+RegisterPage
 
-Currently, two official plugins are available:
+<img width="1900" height="868" alt="image" src="https://github.com/user-attachments/assets/bf5cfe65-6945-4937-9542-05ece7e23928" />'
+ForgotPasswordPage
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<img width="1897" height="863" alt="image" src="https://github.com/user-attachments/assets/c761a375-f9fb-4644-a08d-591ebf0a6b20" />
+HomePage <br />
 
-## React Compiler
+<img width="425" height="756" alt="image" src="https://github.com/user-attachments/assets/b3e3be5c-9202-4680-b821-1a3691d7f77d" /><br />
+Mobile view HomePage
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+<img width="1901" height="865" alt="image" src="https://github.com/user-attachments/assets/0b41a123-65c5-485e-bfd0-3266e52670f8" />
+ProductPage <br />
 
-## Expanding the ESLint configuration
+<img width="426" height="757" alt="image" src="https://github.com/user-attachments/assets/7b9950ca-05ca-42f9-b7ff-c23512297754" /><br />
+Mobile view ProductPage
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+<img width="1902" height="966" alt="image" src="https://github.com/user-attachments/assets/c7a13d8d-84fe-42d1-afcb-cd3804a63163" />
+DetailProductPage
+
+
