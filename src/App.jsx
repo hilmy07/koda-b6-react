@@ -7,6 +7,11 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Product from "./pages/Product";
 import HomeLayout from "./layouts/HomeLayout";
 import DetailProduct from "./pages/DetailProduct";
+import Checkout from "./pages/Checkout";
+import History from "./pages/History";
+import DetailOrder from "./pages/DetailOrder";
+import Profile from "./pages/Profile";
+import DashboardAdmin from "./pages/DashboardAdmin";
 
 function App() {
   const router = createBrowserRouter([
@@ -34,6 +39,26 @@ function App() {
     {
       path: "/DetailProduct",
       element: <DetailProduct />,
+    },
+    {
+      path: "/Checkout",
+      element: <Checkout />,
+    },
+    {
+      path: "/History",
+      element: <History />,
+    },
+    {
+      path: "/DetailOrder",
+      element: <DetailOrder />,
+    },
+    {
+      path: "/Profile",
+      element: <Profile />,
+    },
+    {
+      path: "/Dashboard",
+      element: <DashboardAdmin />,
     },
   ]);
 
