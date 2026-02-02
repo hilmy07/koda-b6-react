@@ -37,8 +37,7 @@ function Product() {
           }}
         >
           <h1 className="text-5xl text-white">
-            We Provide Good Coffee and Healthy <br />
-            Meals
+            We Provide Good Coffee and Healthy Meals
           </h1>
         </div>
       </div>
