@@ -13,6 +13,7 @@ import CardProductMobile from "../components/Home/CardProductMobile";
 import ChatWidget from "../components/Home/ChatWidget";
 
 function Home() {
+  
   return (
     <>
       <main>
