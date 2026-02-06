@@ -38,7 +38,7 @@ function FilterSidebar({
           value={v.search}
           onChange={(e) => onChange({ ...v, search: e.target.value })}
           placeholder="Search Your Product"
-          className="w-full bg-white rounded-lg px-3 py-2 outline-none placeholder-zinc-500 mt-1 mb-2"
+          className="w-full text-black bg-white rounded-lg px-3 py-2 outline-none placeholder-zinc-500 mt-1 mb-2"
         />
       </div>
 
