@@ -20,6 +20,7 @@ function Input({
           type={type}
           placeholder={placeholder}
           className={`w-full outline-none text-gray-700 ${inputClassName}`}
+          {...res}
         />
       </div>
     </div>

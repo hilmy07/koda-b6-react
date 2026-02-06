@@ -39,30 +39,6 @@ export function NavbarAdmin() {
               <img src={logo} alt="logo" className="w-8 h-8" />
               <img src={textLogo} alt="logo" className="h-6 hidden sm:block" />
             </div>
-
-            {/* Desktop Menu */}
-            {/* <ul className="hidden sm:flex gap-6 text-sm">
-              <li
-                onClick={() => navigate("/")}
-                className={`cursor-pointer relative pb-1 ${
-                  isActive("/")
-                    ? "border-b-2 border-orange-500"
-                    : "border-b-2 border-transparent hover:border-orange-500"
-                }`}
-              >
-                Home
-              </li>
-              <li
-                onClick={() => navigate("/product")}
-                className={`cursor-pointer pb-1 ${
-                  isActive("/product")
-                    ? "border-b-2 border-orange-500"
-                    : "border-b-2 border-transparent hover:border-orange-500"
-                }`}
-              >
-                Product
-              </li>
-            </ul> */}
           </div>
 
           {/* Right Section */}
@@ -81,7 +57,7 @@ export function NavbarAdmin() {
             {isLoggedIn ? (
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 border border-white rounded text-sm hover:bg-white hover:text-[#1d1d1d] transition"
+                className="px-4 py-2 border border-black cursor-pointer rounded text-sm hover:bg-white hover:text-[#1d1d1d] transition"
               >
                 Logout
               </button>
@@ -182,12 +158,12 @@ export function NavbarAdmin() {
 
 export function NavbarProduct() {
   // const cartItems = useSelector((state) => state.cart.items);
-  const useAuth = () => useContext(AuthContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { isLoggedIn, logout } = useAuth();
+  // const { isLoggedIn, logout } = useAuth();
 
   const handleSignIn = () => {
     navigate("/auth");
@@ -362,11 +338,10 @@ export function NavbarProduct() {
 }
 
 export function Navbar() {
-  const useAuth = () => useContext(AuthContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { isLoggedIn, logout } = useAuth(); // ambil status login dan fungsi logout
 
   const handleSignIn = () => {
     navigate("/auth");
@@ -444,13 +419,13 @@ export function Navbar() {
               <>
                 <button
                   onClick={handleSignIn}
-                  className="px-4 py-2 border border-white rounded text-sm hover:bg-white hover:text-[#1d1d1d] transition"
+                  className="px-4 py-2 border border-white rounded text-sm hover:bg-white hover:text-[#1d1d1d] transition cursor-pointer"
                 >
                   Sign In
                 </button>
                 <button
                   onClick={handleSignUp}
-                  className="px-4 py-2 bg-orange-500 text-white rounded text-sm hover:bg-orange-600 transition"
+                  className="px-4 py-2 bg-orange-500 text-white rounded text-sm hover:bg-orange-600 transition cursor-pointer"
                 >
                   Sign Up
                 </button>
