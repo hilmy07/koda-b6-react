@@ -9,8 +9,8 @@ import cart from "../../assets/ShoppingCart.png";
 import rating from "../../assets/rating.png";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-// import { useDispatch } from "react-redux";
-// import { addToCart } from "../redux/reducers/chart";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/slice/cartSlice";
 
 /**
  * Komponen kartu produk yang menampilkan daftar produk dari file JSON.
@@ -22,7 +22,7 @@ import { AuthContext } from "../../context/AuthContext";
 function ProductCard() {
   const useAuth = () => useContext(AuthContext);
   const { isLoggedIn } = useAuth();
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   /**
@@ -34,8 +34,8 @@ function ProductCard() {
   /**
    * Menangani navigasi ke halaman detail produk.
    */
-  const handleDetailProduct = () => {
-    navigate("/DetailProduct");
+  const handleDetailProduct = (id) => {
+    navigate(`/product/${id}`);
   };
 
   /**
@@ -50,7 +50,7 @@ function ProductCard() {
       return;
     }
     console.log(prod);
-    // dispatch(addToCart(prod));
+    dispatch(addToCart(prod));
   };
 
   /**
@@ -111,7 +111,7 @@ function ProductCard() {
                 </div>
                 <div className="flex gap-1 mt-1">
                   <button
-                    onClick={handleDetailProduct}
+                    onClick={() => handleDetailProduct(prod.id)}
                     className="cursor-pointer px-40 py-2 bg-[#ff8906] rounded-sm text-black"
                   >
                     Buy
@@ -160,7 +160,7 @@ function ProductCard() {
                 </div>
                 <div className="flex flex-col gap-1 mt-1">
                   <button
-                    onClick={handleDetailProduct}
+                    onClick={() => handleDetailProduct(prod.id)}
                     className="cursor-pointer px-10 py-2 bg-[#ff8906] rounded-sm text-black"
                   >
                     Buy
