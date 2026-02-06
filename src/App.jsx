@@ -12,6 +12,11 @@ import History from "./pages/History";
 import DetailOrder from "./pages/DetailOrder";
 import Profile from "./pages/Profile";
 import DashboardAdmin from "./pages/DashboardAdmin";
+import { AuthProvider } from "./context/AuthProvider";
+import ProtectedRoute from "./context/ProtectedRoute";
+import { Provider } from "react-redux";
+import { store, persistor } from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 function App() {
   const router = createBrowserRouter([
@@ -37,24 +42,40 @@ function App() {
       element: <Product />,
     },
     {
-      path: "/DetailProduct",
+      path: "/product/:id",
       element: <DetailProduct />,
     },
     {
       path: "/Checkout",
-      element: <Checkout />,
+      element: (
+        <ProtectedRoute>
+          <Checkout />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/History",
-      element: <History />,
+      element: (
+        <ProtectedRoute>
+          <History />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/DetailOrder",
-      element: <DetailOrder />,
+      element: (
+        <ProtectedRoute>
+          <DetailOrder />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/Profile",
-      element: <Profile />,
+      element: (
+        <ProtectedRoute>
+          <Profile />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/Dashboard",
@@ -64,7 +85,13 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={router} />;
+      <AuthProvider>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <RouterProvider router={router} />
+          </PersistGate>
+        </Provider>
+      </AuthProvider>
     </>
   );
 }
