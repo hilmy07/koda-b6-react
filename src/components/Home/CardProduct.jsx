@@ -4,9 +4,11 @@ import product2 from "../../assets/product2.png";
 import product3 from "../../assets/product3.png";
 import product4 from "../../assets/product4.png";
 import cart from "../../assets/ShoppingCart.png";
+import { useNavigate } from "react-router";
 
 function CardProduct() {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   // Mapping nama file ke modul image
   const imageMap = {
@@ -14,6 +16,10 @@ function CardProduct() {
     "product2.png": product2,
     "product3.png": product3,
     "product4.png": product4,
+  };
+
+  const handleDetailProduct = (id) => {
+    navigate(`/product/${id}`);
   };
 
   useEffect(() => {
@@ -42,7 +48,10 @@ function CardProduct() {
             </p>
             <p className="mt-1 text-[#ff8906] text-xl">{prod.price}</p>
             <div className="flex gap-1">
-              <button className="cursor-pointer px-23 py-1 bg-[#ff8906] mt-5 rounded-sm text-black">
+              <button
+                className="cursor-pointer px-23 py-1 bg-[#ff8906] mt-5 rounded-sm text-black"
+                onClick={() => handleDetailProduct(prod.id)}
+              >
                 Buy
               </button>
               <button className="cursor-pointer px-2 py-0.5 mt-5 rounded-sm text-black border-2 border-[#ff8906]">
