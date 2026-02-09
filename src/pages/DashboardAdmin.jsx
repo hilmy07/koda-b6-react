@@ -1,5 +1,5 @@
 import React from "react";
-import { NavbarAdmin } from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import {
   FaThLarge,
   FaBox,
@@ -108,7 +108,7 @@ function DashboardAdmin() {
 
   return (
     <>
-      <NavbarAdmin />
+      <Navbar variant="light" />
 
       <div className="flex mt-18 min-h-screen bg-gray-50">
         {/* SIDEBAR */}

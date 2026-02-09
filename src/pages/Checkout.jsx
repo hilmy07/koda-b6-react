@@ -1,5 +1,5 @@
 import React from "react";
-import { NavbarProduct } from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import product from "../assets/product1.png";
 import bri from "../assets/bri.png";
@@ -17,7 +17,7 @@ function Checkout() {
 
   return (
     <>
-      <NavbarProduct />
+      <Navbar variant="dark" />
 
       <div className="mt-30">
         <h2 className="text-5xl font-semibold my-10 ml-35">Payment Details</h2>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavbarProduct } from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import DotsPager from "../components/DotsPagger";
 import product1 from "../assets/product1.png";
@@ -31,7 +31,8 @@ function History() {
 
   return (
     <>
-      <NavbarProduct />
+      {/* <NavbarProduct /> */}
+      <Navbar variant="black" />
       <div className="mt-35">
         <h2 className="text-5xl font-semibold my-10 ml-35">History Order</h2>
       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { NavbarProduct } from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Input from "../components/Input";
 import { FaUser, FaEnvelope } from "react-icons/fa";
@@ -11,7 +11,7 @@ import { FaPhoneVolume } from "react-icons/fa6";
 function Profile() {
   return (
     <>
-      <NavbarProduct />
+      <Navbar variant="dark" />
       <section className="max-w-6xl mx-auto px-6 mt-30">
         <h1 className="text-3xl font-semibold mb-6">Profile</h1>
 

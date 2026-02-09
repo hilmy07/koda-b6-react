@@ -85,13 +85,13 @@ function App() {
 
   return (
     <>
-      <AuthProvider>
-        <Provider store={store}>
+      <Provider store={store}>
+        <AuthProvider>
           <PersistGate loading={null} persistor={persistor}>
             <RouterProvider router={router} />
           </PersistGate>
-        </Provider>
-      </AuthProvider>
+        </AuthProvider>
+      </Provider>
     </>
   );
 }

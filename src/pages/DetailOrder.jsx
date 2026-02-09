@@ -1,5 +1,5 @@
 import React from "react";
-import { NavbarProduct } from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import product1 from "../assets/product1.png";
 import product2 from "../assets/product2.png";
@@ -56,7 +56,8 @@ function DetailOrder() {
 
   return (
     <>
-      <NavbarProduct />
+      {/* <NavbarProduct /> */}
+      <Navbar variant="dark" />
       <section className="max-w-6xl mx-auto px-6 mt-35">
         <header className="mb-7">
           <h1 className="text-3xl md:text-5xl">

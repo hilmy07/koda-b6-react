@@ -5,7 +5,7 @@ import FilterSidebar from "../components/Product/FilterSideBar";
 import ProductCard from "../components/Product/ProductCard";
 import DotsPager from "../components/DotsPagger";
 import Footer from "../components/Footer";
-import { NavbarProduct } from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import Input from "../components/Input";
 import { FaSearch } from "react-icons/fa";
 
@@ -26,7 +26,7 @@ function Product() {
 
   return (
     <>
-      <NavbarProduct />
+      <Navbar variant="dark" />
       <div className="lg:block hidden">
         <div
           className="w-full flex items-center justify-start px-40 py-36"

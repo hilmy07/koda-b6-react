@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import CardProduct from "../components/DetailProduct/CardProduct";
-import { NavbarProduct } from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import DotsPager from "../components/DotsPagger";
 
@@ -216,7 +216,8 @@ export default function DetailProduct() {
 
   return (
     <>
-      <NavbarProduct />
+      {/* <NavbarProduct /> */}
+      <Navbar variant="dark" />
 
       <DetailTop product={product} thumbnails={thumbnails} />
 
