@@ -4,6 +4,7 @@ import { FaSearch, FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
 import logo from "../assets/logo.png";
 import textLogo from "../assets/textLogo.png";
+import { useSelector } from "react-redux";
 
 export default function Navbar({ variant = "dark" }) {
   const { isLoggedIn, logout } = useContext(AuthContext);
@@ -13,6 +14,11 @@ export default function Navbar({ variant = "dark" }) {
 
   const isDark = variant === "dark";
   const isTransparent = variant === "transparent";
+
+  const cartItems = useSelector((state) => state.cart.items);
+
+  // Hitung total quantity
+  const totalQuantity = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   const handleSignIn = () => navigate("/auth");
   const handleSignUp = () => navigate("/auth/new");
@@ -71,7 +77,14 @@ export default function Navbar({ variant = "dark" }) {
         {/* Right Section */}
         <div className="hidden sm:flex items-center gap-6">
           <FaSearch className="cursor-pointer" />
-          <FaShoppingCart className="cursor-pointer" />
+          <div className="relative cursor-pointer">
+            <FaShoppingCart onClick={() => navigate("/checkout")} />
+            {isLoggedIn && totalQuantity > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                {totalQuantity}
+              </span>
+            )}
+          </div>
 
           {isLoggedIn ? (
             <button
@@ -126,7 +139,14 @@ export default function Navbar({ variant = "dark" }) {
 
           <div className="flex gap-6 text-lg mb-4">
             <FaSearch />
-            <FaShoppingCart />
+            <div className="relative">
+              <FaShoppingCart />
+              {isLoggedIn && totalQuantity > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                  {totalQuantity}
+                </span>
+              )}
+            </div>
           </div>
 
           <div className="flex flex-col gap-3">
