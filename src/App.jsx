@@ -11,12 +11,13 @@ import Checkout from "./pages/Checkout";
 import History from "./pages/History";
 import DetailOrder from "./pages/DetailOrder";
 import Profile from "./pages/Profile";
-import DashboardAdmin from "./pages/DashboardAdmin";
+import DashboardAdmin from "./pages/AdminPage/DashboardAdmin";
 import { AuthProvider } from "./context/AuthProvider";
 import ProtectedRoute from "./context/ProtectedRoute";
 import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import ProductList from "./pages/AdminPage/ProductList";
 
 function App() {
   const router = createBrowserRouter([
@@ -79,7 +80,19 @@ function App() {
     },
     {
       path: "/Dashboard",
-      element: <DashboardAdmin />,
+      element: (
+        <ProtectedRoute>
+          <DashboardAdmin />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/productlist",
+      element: (
+        <ProtectedRoute>
+          <ProductList />
+        </ProtectedRoute>
+      ),
     },
   ]);
 

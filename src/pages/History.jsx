@@ -32,7 +32,7 @@ function History() {
   return (
     <>
       {/* <NavbarProduct /> */}
-      <Navbar variant="black" />
+      <Navbar variant="dark" />
       <div className="mt-35">
         <h2 className="text-5xl font-semibold my-10 ml-35">History Order</h2>
       </div>

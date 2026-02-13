@@ -155,6 +155,16 @@ function Login() {
 
           {error && <div className="text-red-500 text-sm mb-3">{error}</div>}
 
+          <div className="flex justify-end mt-1">
+            <button
+              type="button"
+              className="text-orange-500 text-sm hover:underline"
+              onClick={() => navigate("/auth/forgot")}
+            >
+              Forgot Password?
+            </button>
+          </div>
+
           <button
             type="submit"
             className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg mt-4 transition"
