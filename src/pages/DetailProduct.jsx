@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import CardProduct from "../components/DetailProduct/CardProduct";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import DotsPager from "../components/DotsPagger";
+import DotsPager from "../components/DotsPager";
 
 import product1 from "../assets/product1.png";
 import product2 from "../assets/product2.png";
@@ -289,3 +289,4 @@ export default function DetailProduct() {
     </>
   );
 }
+
