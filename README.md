@@ -22,4 +22,8 @@ Mobile view ProductPage
 <img width="1902" height="966" alt="image" src="https://github.com/user-attachments/assets/c7a13d8d-84fe-42d1-afcb-cd3804a63163" />
 DetailProductPage
 
+<img width="1917" height="1070" alt="image" src="https://github.com/user-attachments/assets/f95c75cf-da4e-4386-9e4e-4a843c8bddd6" />
+DashboardAdminPage
+
+
 
