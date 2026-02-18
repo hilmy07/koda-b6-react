@@ -3,7 +3,7 @@ import productBg from "../assets/productBg.png";
 import Promo from "../components/Product/Promo";
 import FilterSidebar from "../components/Product/FilterSidebar";
 import ProductCard from "../components/Product/ProductCard";
-import DotsPager from "../components/DotsPagger";
+import DotsPager from "../components/DotsPager";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Input from "../components/Input";
