@@ -11,6 +11,7 @@ export default function Navbar({ variant = "dark" }) {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const isAdminPage = location.pathname.startsWith("/dashboard");
 
   const isDark = variant === "dark";
   const isTransparent = variant === "transparent";
@@ -57,21 +58,23 @@ export default function Navbar({ variant = "dark" }) {
           </div>
 
           {/* Desktop Menu */}
-          <ul className="hidden sm:flex gap-6 text-sm">
-            {["/", "/product"].map((path, i) => (
-              <li
-                key={i}
-                onClick={() => navigate(path)}
-                className={`cursor-pointer pb-1 ${
-                  isActive(path)
-                    ? "border-b-2 border-orange-500"
-                    : "border-b-2 border-transparent hover:border-orange-500"
-                }`}
-              >
-                {path === "/" ? "Home" : "Product"}
-              </li>
-            ))}
-          </ul>
+          {!isAdminPage && (
+            <ul className="hidden sm:flex gap-6 text-sm">
+              {["/", "/product"].map((path, i) => (
+                <li
+                  key={i}
+                  onClick={() => navigate(path)}
+                  className={`cursor-pointer pb-1 ${
+                    isActive(path)
+                      ? "border-b-2 border-orange-500"
+                      : "border-b-2 border-transparent hover:border-orange-500"
+                  }`}
+                >
+                  {path === "/" ? "Home" : "Product"}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         {/* Right Section */}
@@ -123,19 +126,21 @@ export default function Navbar({ variant = "dark" }) {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="sm:hidden mt-4">
-          <ul className="flex flex-col gap-4 mb-4">
-            {["/", "/product"].map((path, i) => (
-              <li
-                key={i}
-                onClick={() => navigate(path)}
-                className={`cursor-pointer pb-1 border-b-2 ${
-                  isActive(path) ? "border-orange-500" : "border-gray-600"
-                }`}
-              >
-                {path === "/" ? "Home" : "Product"}
-              </li>
-            ))}
-          </ul>
+          {!isAdminPage && (
+            <ul className="flex flex-col gap-4 mb-4">
+              {["/", "/product"].map((path, i) => (
+                <li
+                  key={i}
+                  onClick={() => navigate(path)}
+                  className={`cursor-pointer pb-1 border-b-2 ${
+                    isActive(path) ? "border-orange-500" : "border-gray-600"
+                  }`}
+                >
+                  {path === "/" ? "Home" : "Product"}
+                </li>
+              ))}
+            </ul>
+          )}
 
           <div className="flex gap-6 text-lg mb-4">
             <FaSearch />
