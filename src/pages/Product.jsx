@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import productBg from "../assets/productBg.png";
 import Promo from "../components/Product/Promo";
-import FilterSidebar from "../components/Product/FilterSideBar";
+import FilterSidebar from "../components/Product/FilterSidebar";
 import ProductCard from "../components/Product/ProductCard";
 import DotsPager from "../components/DotsPagger";
 import Footer from "../components/Footer";
