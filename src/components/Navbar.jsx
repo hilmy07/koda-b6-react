@@ -5,6 +5,8 @@ import { AuthContext } from "../context/AuthContext";
 import logo from "../assets/logo.png";
 import textLogo from "../assets/textLogo.png";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../redux/slice/authSlice";
 
 export default function Navbar({ variant = "dark" }) {
   const { isLoggedIn, logout } = useContext(AuthContext);
@@ -12,6 +14,7 @@ export default function Navbar({ variant = "dark" }) {
   const navigate = useNavigate();
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith("/dashboard");
+  const dispatch = useDispatch();
 
   const isDark = variant === "dark";
   const isTransparent = variant === "transparent";
@@ -25,6 +28,7 @@ export default function Navbar({ variant = "dark" }) {
   const handleSignUp = () => navigate("/auth/new");
   const handleLogout = () => {
     logout();
+    dispatch(logoutUser());
     navigate("/");
   };
 
