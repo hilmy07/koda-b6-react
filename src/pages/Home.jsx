@@ -13,7 +13,6 @@ import CardProductMobile from "../components/Home/CardProductMobile";
 import ChatWidget from "../components/Home/ChatWidget";
 
 function Home() {
-  
   return (
     <>
       <main>
@@ -25,6 +24,9 @@ function Home() {
           >
             <div className="text-white max-w-md m-auto mt-50">
               {/* Heading */}
+              <h1 className="text-3xl font-bold leading-snug mb-6">
+                Start Your Day with <br /> Coffee and Good Meals
+              </h1>
               <h1 className="text-3xl font-bold leading-snug mb-6">
                 Start Your Day with <br /> Coffee and Good Meals
               </h1>
