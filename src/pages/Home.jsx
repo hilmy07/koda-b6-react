@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import home1 from "../assets/home1.png";
 import home2 from "../assets/home2.png";
 import home3 from "../assets/home3.png";
@@ -11,8 +11,33 @@ import checklist from "../assets/checklist.png";
 import CardProduct from "../components/Home/CardProduct";
 import CardProductMobile from "../components/Home/CardProductMobile";
 import ChatWidget from "../components/Home/ChatWidget";
+import http from "../lib/http";
 
 function Home() {
+  const [data, setData] = useState([]);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const getDataReviews = async () => {
+      const req = await http("/reviews");
+      const result = await req.json();
+
+      setData(result.data);
+    };
+
+    getDataReviews();
+  }, []);
+
+  const review = data[index];
+
+  const next = () => {
+    setIndex((prev) => (prev + 1) % data.length);
+  };
+
+  const prev = () => {
+    setIndex((prev) => (prev - 1 + data.length) % data.length);
+  };
+
   return (
     <>
       <main>
@@ -305,7 +330,7 @@ function Home() {
               <h1 className="text-white text-5xl border-l-6 border-[#ff8906] pl-5 mt-4">
                 Viezh Robert
               </h1>
-              <p className="text-[#ff8906] mt-1">Manager Coffee Shop</p>
+              <p className="text-[#ff8906] mt-1">Customer</p>
               <div className="mt-2">
                 <p className="text-white text-l">
                   "Wow... I am very happy to spend my whole day here. The wifi
@@ -354,33 +379,50 @@ function Home() {
                 className="max-w-full max-h-full object-contain"
               />
             </div>
-            <div className="absolute mt-80 ml-5 mr-10">
-              <h1 className="text-white text-3xl border-l-4 border-[#ff8906] pl-3 mt-4">
-                Viezh Robert
+            <div className="mt-15 ml-140">
+              <p className="text-white text-2xl">Testimonial</p>
+
+              <h1 className="text-white text-5xl border-l-6 border-[#ff8906] pl-5 mt-4">
+                {review?.fullname}
               </h1>
-              <p className="text-[#ff8906] mt-1">Manager Coffee Shop</p>
+
+              <p className="text-[#ff8906] mt-1">Customer</p>
+
               <div className="mt-2">
-                <p className="text-white text-sm">
-                  "Wow... I am very happy to spend my whole day here. The wifi
-                  is
-                </p>
-                <p className="text-white text-sm">
-                  good, and coffee and meals tho. I like it here!!Very
-                </p>
-                <p className="text-white text-sm">recomended!</p>
+                <p className="text-white text-l">"{review?.message}"</p>
               </div>
-              <div className="mt-4">
+
+              {/* ⭐ Rating */}
+              <div className="flex mt-2">
+                {Array.from({ length: review?.rating || 0 }).map((_, i) => (
+                  <span key={i} className="text-yellow-400 text-xl">
+                    ★
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-2">
                 <img src={home7} alt="review" />
               </div>
-              <div className="absolute bottom-10 top-55 flex gap-4 z-20">
-                <button className="w-8 h-8 rounded-full bg-white shadow-md border flex items-center justify-center">
-                  {"<"}
+
+              {/* BUTTON */}
+              <div className="flex align-center">
+                <button
+                  onClick={prev}
+                  className="absolute top-81 left-140 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer"
+                >
+                  <span className="text-gray-700 font-bold text-lg">{"<"}</span>
                 </button>
-                <button className="w-8 h-8 rounded-full bg-white shadow-md border flex items-center justify-center">
-                  {">"}
+
+                <button
+                  onClick={next}
+                  className="absolute top-81 left-153 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer"
+                >
+                  <span className="text-gray-700 font-bold text-lg">{">"}</span>
                 </button>
               </div>
-              <div className="mt-20">
+
+              <div className="mt-17">
                 <img src={home8} alt="loadReview" />
               </div>
             </div>
