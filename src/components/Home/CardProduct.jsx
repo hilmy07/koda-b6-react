@@ -63,9 +63,7 @@ function CardProduct() {
             </div>
 
             <div>
-              <p className="text-[#ff8906] text-xl font-semibold">
-                IDR {prod.base_price}
-              </p>
+              <p className="text-[#ff8906] text-xl">IDR {prod.base_price}</p>
 
               <div className="flex gap-2 mt-3">
                 <button
