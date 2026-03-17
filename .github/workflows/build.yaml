@@ -7,16 +7,8 @@ jobs:
     permissions:
       packages: write
     steps:
-      - name: Setup nodejs v24.13.0
-        uses: actions/setup-node@v6
-        with:
-          node-version: "24.13.0"
-      - name: Check nodejs version
-        run: node -v
       - name: Gathering source code
         uses: actions/checkout@v6
-      - name: Build app
-        run: npm install && npm run build
       - name: "[DOCKER] Setup metadata"
         id: meta
         uses: docker/metadata-action@v5
@@ -51,6 +43,6 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            docker pull ghcr.io/hilmy07/ssh-server-coffee:latest
-            docker rm -f web-hilmy
-            docker run -d -p 20901:80 --name web-hilmy --network pman_web ghcr.io/hilmy07/ssh-server-coffee:latest
+            cd server-hilmy
+            docker compose frontend
+            docker compose up frontend -d
