@@ -14,6 +14,6 @@ FROM nginx:1.28.2-alpine
 
 WORKDIR /usr/share/nginx/html
 
-COPY --from=build /workspace/dist .
+COPY --from=build /workspace/dist/ .
 
 
