@@ -25,14 +25,6 @@ function CardProduct() {
   };
 
   useEffect(() => {
-    // fetch("/data/products.json")
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setProducts(data.slice(0, 4));
-    //   })
-    //   .catch((err) => {
-    //     console.error("Error loading products JSON:", err);
-    //   });
     const getDataProducts = async () => {
       const req = await http("/recommended-products");
       const result = await req.json();
