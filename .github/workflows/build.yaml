@@ -44,5 +44,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd server-hilmy
-            docker compose frontend
+            docker compose pull frontend
             docker compose up frontend -d
