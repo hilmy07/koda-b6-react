@@ -27,9 +27,6 @@ function Home() {
               <h1 className="text-3xl font-bold leading-snug mb-6">
                 Start Your Day with <br /> Coffee and Good Meals
               </h1>
-              <h1 className="text-3xl font-bold leading-snug mb-6">
-                Start Your Day with <br /> Coffee and Good Meals
-              </h1>
 
               {/* Description */}
               <p className="text-l leading-relaxed mb-8">
