@@ -34,7 +34,7 @@ function CardProduct() {
     //     console.error("Error loading products JSON:", err);
     //   });
     const getDataProducts = async () => {
-      const req = await http("/recomended-products");
+      const req = await http("/recommended-products");
       const data = await req.json();
 
       setData(data);
