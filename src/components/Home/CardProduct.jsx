@@ -5,9 +5,11 @@ import product3 from "../../assets/product3.png";
 import product4 from "../../assets/product4.png";
 import cart from "../../assets/ShoppingCart.png";
 import { useNavigate } from "react-router";
+import http from "../../lib/http";
 
 function CardProduct() {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
+  const [data, setData] = useState([]);
   const navigate = useNavigate();
 
   // Mapping nama file ke modul image
@@ -23,30 +25,38 @@ function CardProduct() {
   };
 
   useEffect(() => {
-    fetch("/data/products.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data.slice(0, 4));
-      })
-      .catch((err) => {
-        console.error("Error loading products JSON:", err);
-      });
+    // fetch("/data/products.json")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setProducts(data.slice(0, 4));
+    //   })
+    //   .catch((err) => {
+    //     console.error("Error loading products JSON:", err);
+    //   });
+    const getDataProducts = async () => {
+      const req = await http("/recomended-products");
+      const data = await req.json();
+
+      setData(data);
+    };
+
+    getDataProducts();
   }, []);
 
   return (
     <form className="flex flex-wrap justify-center gap-10 mb-55">
-      {products.map((prod) => (
+      {data.map((prod) => (
         <div key={prod.id} className="relative mt-50 ml-3">
           <div
             className="w-70 h-70 bg-cover bg-center"
             style={{ backgroundImage: `url(${imageMap[prod.image]})` }}
           ></div>
           <div className="absolute top-59 left-2 w-66 h-45 bg-white z-10 px-2 shadow-md border border-transparent">
-            <p className="text-[#0b132a] text-2xl">{prod.name}</p>
+            <p className="text-[#0b132a] text-2xl">{prod.name_product}</p>
             <p className="text-[10px] text-[#4f5665] text-xl mt-2">
               {prod.description}
             </p>
-            <p className="mt-1 text-[#ff8906] text-xl">{prod.price}</p>
+            <p className="mt-1 text-[#ff8906] text-xl">{prod.base_price}</p>
             <div className="flex gap-1">
               <button
                 className="cursor-pointer px-23 py-1 bg-[#ff8906] mt-5 rounded-sm text-black"
