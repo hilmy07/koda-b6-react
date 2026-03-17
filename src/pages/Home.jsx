@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import home1 from "../assets/home1.png";
 import home2 from "../assets/home2.png";
 import home3 from "../assets/home3.png";
@@ -11,43 +11,8 @@ import checklist from "../assets/checklist.png";
 import CardProduct from "../components/Home/CardProduct";
 import CardProductMobile from "../components/Home/CardProductMobile";
 import ChatWidget from "../components/Home/ChatWidget";
-import http from "../lib/http";
 
 function Home() {
-  const [data, setData] = useState([]);
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const getDataReviews = async () => {
-      const req = await http("/reviews");
-      const result = await req.json();
-
-      setData(result.data || []);
-    };
-
-    getDataReviews();
-  }, []);
-
-  useEffect(() => {
-    if (index >= data.length) {
-      setIndex(0);
-    }
-  }, [data]);
-
-  if (!data.length) {
-    return <p className="text-white">Loading...</p>;
-  }
-
-  const review = data[index];
-
-  const next = () => {
-    setIndex((prev) => (prev + 1) % data.length);
-  };
-
-  const prev = () => {
-    setIndex((prev) => (prev - 1 + data.length) % data.length);
-  };
-
   return (
     <>
       <main>
@@ -340,7 +305,7 @@ function Home() {
               <h1 className="text-white text-5xl border-l-6 border-[#ff8906] pl-5 mt-4">
                 Viezh Robert
               </h1>
-              <p className="text-[#ff8906] mt-1">Customer</p>
+              <p className="text-[#ff8906] mt-1">Manager Coffee Shop</p>
               <div className="mt-2">
                 <p className="text-white text-l">
                   "Wow... I am very happy to spend my whole day here. The wifi
