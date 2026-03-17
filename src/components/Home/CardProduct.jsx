@@ -64,7 +64,7 @@ function CardProduct() {
 
             <div>
               <p className="text-[#ff8906] text-xl font-semibold">
-                {prod.base_price}
+                IDR {prod.base_price}
               </p>
 
               <div className="flex gap-2 mt-3">
