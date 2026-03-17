@@ -327,60 +327,6 @@ function Home() {
             </div>
             <div className="mt-15 ml-140">
               <p className="text-white text-2xl">Testimonial</p>
-              <h1 className="text-white text-5xl border-l-6 border-[#ff8906] pl-5 mt-4">
-                Viezh Robert
-              </h1>
-              <p className="text-[#ff8906] mt-1">Customer</p>
-              <div className="mt-2">
-                <p className="text-white text-l">
-                  "Wow... I am very happy to spend my whole day here. The wifi
-                  is"
-                </p>
-                <p className="text-white text-l">
-                  good, and coffee and meals tho. I like it here!!Very
-                </p>
-                <p className="text-white text-l">recomended!</p>
-              </div>
-              <div className="mt-2">
-                <img src={home7} alt="review" />
-              </div>
-              <div className="flex align-center">
-                <button className="absolute top-81 left-140 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer">
-                  <span className="text-gray-700 font-bold text-lg">{"<"}</span>
-                </button>
-                <button className="absolute top-81 left-153 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer">
-                  <span className="text-gray-700 font-bold text-lg">{">"}</span>
-                </button>
-              </div>
-              <div className="mt-17">
-                <img src={home8} alt="loadReview" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* mobile view */}
-        <div className="lg:hidden">
-          <div
-            className="relative w-full h-[95vh] flex align-center"
-            style={{
-              backgroundImage: `url(${home5})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            <h1 className="absolute text-white text-2xl flex justify-center w-full pt-4">
-              Testimonial
-            </h1>
-            <div className="absolute top-16 left-5 right-5 bottom-10">
-              <img
-                src={home6}
-                alt="user"
-                className="max-w-full max-h-full object-contain"
-              />
-            </div>
-            <div className="mt-15 ml-140">
-              <p className="text-white text-2xl">Testimonial</p>
 
               <h1 className="text-white text-5xl border-l-6 border-[#ff8906] pl-5 mt-4">
                 {review?.fullname}
@@ -423,6 +369,59 @@ function Home() {
               </div>
 
               <div className="mt-17">
+                <img src={home8} alt="loadReview" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* mobile view */}
+        <div className="lg:hidden">
+          <div
+            className="relative w-full h-[95vh] flex align-center"
+            style={{
+              backgroundImage: `url(${home5})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            <h1 className="absolute text-white text-2xl flex justify-center w-full pt-4">
+              Testimonial
+            </h1>
+            <div className="absolute top-16 left-5 right-5 bottom-10">
+              <img
+                src={home6}
+                alt="user"
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+            <div className="absolute mt-80 ml-5 mr-10">
+              <h1 className="text-white text-3xl border-l-4 border-[#ff8906] pl-3 mt-4">
+                Viezh Robert
+              </h1>
+              <p className="text-[#ff8906] mt-1">Manager Coffee Shop</p>
+              <div className="mt-2">
+                <p className="text-white text-sm">
+                  "Wow... I am very happy to spend my whole day here. The wifi
+                  is
+                </p>
+                <p className="text-white text-sm">
+                  good, and coffee and meals tho. I like it here!!Very
+                </p>
+                <p className="text-white text-sm">recomended!</p>
+              </div>
+              <div className="mt-4">
+                <img src={home7} alt="review" />
+              </div>
+              <div className="absolute bottom-10 top-55 flex gap-4 z-20">
+                <button className="w-8 h-8 rounded-full bg-white shadow-md border flex items-center justify-center">
+                  {"<"}
+                </button>
+                <button className="w-8 h-8 rounded-full bg-white shadow-md border flex items-center justify-center">
+                  {">"}
+                </button>
+              </div>
+              <div className="mt-20">
                 <img src={home8} alt="loadReview" />
               </div>
             </div>
