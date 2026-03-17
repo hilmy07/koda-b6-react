@@ -51,22 +51,34 @@ function CardProduct() {
             className="w-70 h-70 bg-cover bg-center"
             style={{ backgroundImage: `url(${imageMap[prod.image]})` }}
           ></div>
-          <div className="absolute top-59 left-2 w-66 h-45 bg-white z-10 px-2 shadow-md border border-transparent">
-            <p className="text-[#0b132a] text-2xl">{prod.name_product}</p>
-            <p className="text-[10px] text-[#4f5665] text-xl mt-2">
-              {prod.description}
-            </p>
-            <p className="mt-1 text-[#ff8906] text-xl">{prod.base_price}</p>
-            <div className="flex gap-1">
-              <button
-                className="cursor-pointer px-23 py-1 bg-[#ff8906] mt-5 rounded-sm text-black"
-                onClick={() => handleDetailProduct(prod.id)}
-              >
-                Buy
-              </button>
-              <button className="cursor-pointer px-2 py-0.5 mt-5 rounded-sm text-black border-2 border-[#ff8906]">
-                <img src={cart} alt="cart" className="w-4 h-4" />
-              </button>
+          <div className="absolute top-59 left-2 w-66 h-52 bg-white z-10 px-3 py-2 shadow-md flex flex-col justify-between">
+            <div>
+              <p className="text-[#0b132a] text-xl font-semibold line-clamp-1">
+                {prod.name_product}
+              </p>
+
+              <p className="text-sm text-[#4f5665] mt-2 line-clamp-3">
+                {prod.description}
+              </p>
+            </div>
+
+            <div>
+              <p className="text-[#ff8906] text-xl font-semibold">
+                {prod.base_price}
+              </p>
+
+              <div className="flex gap-2 mt-3">
+                <button
+                  className="flex-1 cursor-pointer py-1 bg-[#ff8906] rounded-sm text-black"
+                  onClick={() => handleDetailProduct(prod.id)}
+                >
+                  Buy
+                </button>
+
+                <button className="cursor-pointer px-2 py-1 rounded-sm border-2 border-[#ff8906]">
+                  <img src={cart} alt="cart" className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
