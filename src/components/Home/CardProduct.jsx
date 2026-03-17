@@ -14,7 +14,7 @@ function CardProduct() {
 
   // Mapping nama file ke modul image
   const imageMap = {
-    "product1.png": product1,
+    "americano.jpg": product1,
     "product2.png": product2,
     "product3.png": product3,
     "product4.png": product4,
