@@ -35,9 +35,9 @@ function CardProduct() {
     //   });
     const getDataProducts = async () => {
       const req = await http("/recommended-products");
-      const data = await req.json();
+      const result = await req.json();
 
-      setData(data);
+      setData(result.data);
     };
 
     getDataProducts();
