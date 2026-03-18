@@ -348,7 +348,13 @@ function Home() {
               </div>
 
               <div className="mt-2">
-                <img src={home7} alt="review" />
+                <div className="flex gap-1 mt-2">
+                  {Array.from({ length: current?.rating || 0 }).map((_, i) => (
+                    <span key={i} className="text-yellow-400 text-xl">
+                      ★
+                    </span>
+                  ))}
+                </div>
               </div>
 
               {/* BUTTON */}
