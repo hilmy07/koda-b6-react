@@ -15,17 +15,32 @@ import http from "../lib/http";
 
 function Home() {
   const [review, setReview] = useState([]);
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const getDataProducts = async () => {
-      const result = await http("/recommended-products");
+    const getDataReviews = async () => {
+      const result = await http("/reviews");
 
       setReview(result.data);
-      console.log(result);
+      // console.log(result);
     };
 
-    getDataProducts();
+    getDataReviews();
   }, []);
+
+  if (review.length === 0) {
+    return <p className="text-white">Loading...</p>;
+  }
+
+  const current = review[index];
+
+  const next = () => {
+    setIndex((prev) => (prev + 1) % review.length);
+  };
+
+  const prev = () => {
+    setIndex((prev) => (prev - 1 + review.length) % review.length);
+  };
 
   return (
     <>
@@ -316,32 +331,39 @@ function Home() {
             </div>
             <div className="mt-15 ml-140">
               <p className="text-white text-2xl">Testimonial</p>
+
               <h1 className="text-white text-5xl border-l-6 border-[#ff8906] pl-5 mt-4">
-                Viezh Robert
+                {current.fullname}
               </h1>
-              <p className="text-[#ff8906] mt-1">Manager Coffee Shop</p>
+
+              <p className="text-[#ff8906] mt-1">Customer</p>
+
               <div className="mt-2">
-                <p className="text-white text-l">
-                  "Wow... I am very happy to spend my whole day here. The wifi
-                  is"
-                </p>
-                <p className="text-white text-l">
-                  good, and coffee and meals tho. I like it here!!Very
-                </p>
-                <p className="text-white text-l">recomended!</p>
+                <p className="text-white text-l">"{current.message}"</p>
               </div>
+
               <div className="mt-2">
                 <img src={home7} alt="review" />
               </div>
-              <div className="flex align-center">
-                <button className="absolute top-81 left-140 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer">
+
+              {/* BUTTON */}
+              <div className="flex gap-3 mt-5 items-center">
+                <button
+                  onClick={prev}
+                  className="w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-200"
+                >
                   <span className="text-gray-700 font-bold text-lg">{"<"}</span>
                 </button>
-                <button className="absolute top-81 left-153 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer">
+
+                <button
+                  onClick={next}
+                  className="w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-200"
+                >
                   <span className="text-gray-700 font-bold text-lg">{">"}</span>
                 </button>
               </div>
-              <div className="mt-17">
+
+              <div className="mt-5">
                 <img src={home8} alt="loadReview" />
               </div>
             </div>
