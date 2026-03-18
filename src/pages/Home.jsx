@@ -317,34 +317,31 @@ function Home() {
         </div>
         <div className="lg:block hidden">
           <div
-            className="relative w-full h-[60vh] flex items-center"
+            className="relative w-full h-[60vh] flex align-center"
             style={{
               backgroundImage: `url(${home5})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
           >
-            {/* IMAGE (JANGAN BLOCK CLICK) */}
-            <div className="absolute top-15 left-20 right-0 bottom-15 pointer-events-none z-10">
+            <div className="absolute top-15 left-20 right-0 bottom-15">
               <img
                 src={home6}
                 alt="user"
                 className="max-w-full max-h-full object-contain"
               />
             </div>
-
-            {/* CONTENT */}
-            <div className="relative z-50 mt-15 ml-140">
+            <div className="mt-15 ml-140">
               <p className="text-white text-2xl">Testimonial</p>
 
               <h1 className="text-white text-5xl border-l-6 border-[#ff8906] pl-5 mt-4">
-                {current?.fullname}
+                {current.fullname}
               </h1>
 
               <p className="text-[#ff8906] mt-1">Customer</p>
 
               <div className="mt-2">
-                <p className="text-white text-l">"{current?.message}"</p>
+                <p className="text-white text-l">"{current.message}"</p>
               </div>
 
               <div className="mt-2">
@@ -354,21 +351,15 @@ function Home() {
               {/* BUTTON */}
               <div className="flex gap-3 mt-5 items-center">
                 <button
-                  onClick={() => {
-                    console.log("PREV");
-                    prev();
-                  }}
-                  className="z-50 w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-200"
+                  onClick={prev}
+                  className="w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-200"
                 >
                   <span className="text-gray-700 font-bold text-lg">{"<"}</span>
                 </button>
 
                 <button
-                  onClick={() => {
-                    console.log("NEXT");
-                    next();
-                  }}
-                  className="z-50 w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-200"
+                  onClick={next}
+                  className="w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-200"
                 >
                   <span className="text-gray-700 font-bold text-lg">{">"}</span>
                 </button>
