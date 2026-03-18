@@ -334,7 +334,7 @@ function Home() {
             </div>
 
             {/* CONTENT */}
-            <div className="relative z-50 mt-15 ml-140">
+            <div className="relative z-50 ml-140">
               <p className="text-white text-2xl">Testimonial</p>
 
               <h1 className="text-white text-5xl border-l-6 border-[#ff8906] pl-5 mt-4">
