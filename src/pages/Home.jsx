@@ -35,10 +35,12 @@ function Home() {
   const current = review[index];
 
   const next = () => {
+    console.log("next");
     setIndex((prev) => (prev + 1) % review.length);
   };
 
   const prev = () => {
+    console.log("prev");
     setIndex((prev) => (prev - 1 + review.length) % review.length);
   };
 
@@ -350,14 +352,14 @@ function Home() {
               <div className="flex gap-3 mt-5 items-center">
                 <button
                   onClick={prev}
-                  className="w-10 z- 50 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-200"
+                  className="w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-200"
                 >
                   <span className="text-gray-700 font-bold text-lg">{"<"}</span>
                 </button>
 
                 <button
                   onClick={next}
-                  className="z- 50 w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-200"
+                  className="w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer hover:bg-gray-200"
                 >
                   <span className="text-gray-700 font-bold text-lg">{">"}</span>
                 </button>
