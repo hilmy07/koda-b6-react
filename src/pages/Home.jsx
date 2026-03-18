@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import home1 from "../assets/home1.png";
 import home2 from "../assets/home2.png";
 import home3 from "../assets/home3.png";
@@ -11,8 +11,22 @@ import checklist from "../assets/checklist.png";
 import CardProduct from "../components/Home/CardProduct";
 import CardProductMobile from "../components/Home/CardProductMobile";
 import ChatWidget from "../components/Home/ChatWidget";
+import http from "../lib/http";
 
 function Home() {
+  const [review, setReview] = useState([]);
+
+  useEffect(() => {
+    const getDataProducts = async () => {
+      const result = await http("/recommended-products");
+
+      setReview(result.data);
+      console.log(result);
+    };
+
+    getDataProducts();
+  }, []);
+
   return (
     <>
       <main>
