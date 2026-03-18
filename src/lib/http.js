@@ -1,15 +1,21 @@
 const BASE_URL = "https://hilmy-backend.camps.fahrul.id";
 
-function http(url, body, opts = {}) {
-  const headers = {};
+async function http(url, body, opts = {}) {
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
   if (opts.token) {
     headers.Authorization = "Bearer " + opts.token;
   }
-  return fetch(BASE_URL + url, {
+
+  const response = await fetch(BASE_URL + url, {
     method: opts.method || "GET",
-    body,
-    headers,
+    headers: headers,
+    body: opts.body ? JSON.stringify(opts.body) : undefined,
   });
+
+  return await response.json();
 }
 
 export default http;
