@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import home1 from "../assets/home1.png";
 import home2 from "../assets/home2.png";
 import home3 from "../assets/home3.png";
@@ -11,34 +11,8 @@ import checklist from "../assets/checklist.png";
 import CardProduct from "../components/Home/CardProduct";
 import CardProductMobile from "../components/Home/CardProductMobile";
 import ChatWidget from "../components/Home/ChatWidget";
-import http from "../lib/http";
 
 function Home() {
-  const [review, setReview] = useState([]);
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const getDataReviews = async () => {
-      const req = await http("/reviews");
-      const result = await req.json();
-
-      setReview(result.data);
-      console.log(result);
-    };
-
-    getDataReviews();
-  }, []);
-
-  const currentReview = review[index];
-
-  const next = () => {
-    setIndex((prev) => (prev + 1) % review.length);
-  };
-
-  const prev = () => {
-    setIndex((prev) => (prev - 1 + review.length) % review.length);
-  };
-
   return (
     <>
       <main>
@@ -328,35 +302,33 @@ function Home() {
             </div>
             <div className="mt-15 ml-140">
               <p className="text-white text-2xl">Testimonial</p>
-
-              {currentReview && (
-                <>
-                  <h1 className="text-white text-5xl border-l-6 border-[#ff8906] pl-5 mt-4">
-                    {currentReview.fullname}
-                  </h1>
-
-                  <p className="text-[#ff8906] mt-1">Customer Coffee Shop</p>
-
-                  <div className="mt-2">
-                    <p className="text-white text-l">
-                      "{currentReview.message}"
-                    </p>
-                  </div>
-
-                  <div className="mt-2">
-                    <img src={home7} alt="review" />
-                  </div>
-                </>
-              )}
-
+              <h1 className="text-white text-5xl border-l-6 border-[#ff8906] pl-5 mt-4">
+                Viezh Robert
+              </h1>
+              <p className="text-[#ff8906] mt-1">Manager Coffee Shop</p>
+              <div className="mt-2">
+                <p className="text-white text-l">
+                  "Wow... I am very happy to spend my whole day here. The wifi
+                  is"
+                </p>
+                <p className="text-white text-l">
+                  good, and coffee and meals tho. I like it here!!Very
+                </p>
+                <p className="text-white text-l">recomended!</p>
+              </div>
+              <div className="mt-2">
+                <img src={home7} alt="review" />
+              </div>
               <div className="flex align-center">
-                <button onClick={prev} className="...">
-                  {"<"}
+                <button className="absolute top-81 left-140 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer">
+                  <span className="text-gray-700 font-bold text-lg">{"<"}</span>
                 </button>
-
-                <button onClick={next} className="...">
-                  {">"}
+                <button className="absolute top-81 left-153 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-gray-400 flex items-center justify-center cursor-pointer">
+                  <span className="text-gray-700 font-bold text-lg">{">"}</span>
                 </button>
+              </div>
+              <div className="mt-17">
+                <img src={home8} alt="loadReview" />
               </div>
             </div>
           </div>

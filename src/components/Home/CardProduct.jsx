@@ -26,7 +26,7 @@ function CardProduct() {
 
   useEffect(() => {
     const getDataProducts = async () => {
-      const result = await http("/recommended-products"); // ✅ langsung
+      const result = await http("/recommended-products");
 
       setData(result.data);
     };
