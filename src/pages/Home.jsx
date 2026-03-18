@@ -14,18 +14,18 @@ import ChatWidget from "../components/Home/ChatWidget";
 import http from "../lib/http";
 
 function Home() {
-  // const [review, setReview] = useState([]);
+  const [review, setReview] = useState([]);
 
-  // useEffect(() => {
-  //   const getDataReviews = async () => {
-  //     const req = await http("/reviews");
-  //     const result = await req.json();
+  useEffect(() => {
+    const getDataReviews = async () => {
+      const req = await http("/reviews");
+      const result = await req.json();
 
-  //     setReview(result.data);
-  //   };
+      setReview(result.data);
+    };
 
-  //   console.log(getDataReviews());
-  // }, []);
+    console.log(getDataReviews());
+  }, []);
 
   return (
     <>
