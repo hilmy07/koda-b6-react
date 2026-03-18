@@ -32,12 +32,10 @@ function Home() {
   const currentReview = review[index];
 
   const next = () => {
-    if (review.length === 0) return;
     setIndex((prev) => (prev + 1) % review.length);
   };
 
   const prev = () => {
-    if (review.length === 0) return;
     setIndex((prev) => (prev - 1 + review.length) % review.length);
   };
 
