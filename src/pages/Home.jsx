@@ -22,10 +22,10 @@ function Home() {
       const result = await req.json();
 
       setReview(result.data);
-      return result;
+      console.log(result);
     };
 
-    console.log(getDataReviews());
+    getDataReviews();
   }, []);
 
   return (
