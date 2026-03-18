@@ -8,7 +8,6 @@ async function http(url, body, opts = {}) {
   if (opts.token) {
     headers.Authorization = "Bearer " + opts.token;
   }
-
   const response = await fetch(BASE_URL + url, {
     method: opts.method || "GET",
     headers: headers,
