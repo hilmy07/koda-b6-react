@@ -349,13 +349,39 @@ function Home() {
                 </>
               )}
 
-              <div className="flex align-center">
-                <button onClick={prev} className="...">
-                  {"<"}
+              <div className="flex items-center gap-4 mt-4">
+                <button
+                  onClick={prev}
+                  className="
+                        w-10 h-10
+                        rounded-full
+                        bg-white
+                        shadow-md
+                        border border-gray-300
+                        flex items-center justify-center
+                        hover:bg-gray-100
+                        active:scale-95
+                        transition
+                      "
+                >
+                  <span className="text-gray-700 font-bold text-lg">{"<"}</span>
                 </button>
 
-                <button onClick={next} className="...">
-                  {">"}
+                <button
+                  onClick={next}
+                  className="
+                          w-10 h-10
+                          rounded-full
+                          bg-white
+                          shadow-md
+                          border border-gray-300
+                          flex items-center justify-center
+                          hover:bg-gray-100
+                          active:scale-95
+                          transition
+                        "
+                >
+                  <span className="text-gray-700 font-bold text-lg">{">"}</span>
                 </button>
               </div>
             </div>
