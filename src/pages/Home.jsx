@@ -347,14 +347,20 @@ function Home() {
                 <p className="text-white text-l">"{current?.message}"</p>
               </div>
 
-              <div className="mt-2">
-                <div className="flex gap-1 mt-2">
+              <div className="flex items-center gap-2 mt-2">
+                {/* Bintang */}
+                <div className="flex gap-1">
                   {Array.from({ length: current?.rating || 0 }).map((_, i) => (
                     <span key={i} className="text-yellow-400 text-xl">
                       ★
                     </span>
                   ))}
                 </div>
+
+                {/* Text rating */}
+                <span className="text-white text-sm font-medium">
+                  {current?.rating?.toFixed(1)}
+                </span>
               </div>
 
               {/* BUTTON */}
