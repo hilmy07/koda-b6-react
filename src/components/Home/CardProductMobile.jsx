@@ -4,27 +4,27 @@ import product2 from "../../assets/product2.png";
 import product3 from "../../assets/product3.png";
 import product4 from "../../assets/product4.png";
 import cart from "../../assets/ShoppingCart.png";
+import http from "../../lib/http";
 
 function CardProductMobile() {
   const [products, setProducts] = useState([]);
 
   // Mapping nama file ke modul image
   const imageMap = {
-    "product1.png": product1,
-    "product2.png": product2,
-    "product3.png": product3,
-    "product4.png": product4,
+    "americano.jpg": product1,
+    "mocha.jpg": product2,
+    "vanilla.jpg": product3,
+    "thaitea.jpg": product4,
   };
 
   useEffect(() => {
-    fetch("/data/products.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data.slice(0, 4));
-      })
-      .catch((err) => {
-        console.error("Error loading products JSON:", err);
-      });
+    const getDataProducts = async () => {
+      const result = await http("/recommended-products");
+
+      setProducts(result.data);
+    };
+
+    getDataProducts();
   }, []);
 
   return (
