@@ -62,7 +62,10 @@ function ProductList() {
               {/* BODY */}
               <tbody className="divide-y">
                 {[1, 2, 3, 4, 5].map((item) => (
-                  <tr key={item} className="hover:bg-gray-50 transition">
+                  <tr
+                    key={item}
+                    className="hover:bg-gray-50 transition border-b-gray-200"
+                  >
                     <td className="px-4 py-4">
                       <input type="checkbox" />
                     </td>
