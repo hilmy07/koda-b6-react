@@ -37,8 +37,10 @@ function CardProductMobile() {
               style={{ backgroundImage: `url(${imageMap[prod.image]})` }}
             ></div>
             <div className="absolute top-45 w-40 h-50 bg-white z-10 px-2 border border-transparent">
-              <p className="text-[#0b132a] text-xl">{prod.name_product}</p>
-              <p className="text-[10px] text-[#4f5665] text-xl mt-2">
+              <p className="text-[#0b132a] text-xl line-clamp-1">
+                {prod.name_product}
+              </p>
+              <p className="text-[10px] text-[#4f5665] text-xl mt-2 line-clamp-3">
                 {prod.description}
               </p>
               <p className="mt-1 text-[#ff8906] text-xl">{prod.base_price}</p>
