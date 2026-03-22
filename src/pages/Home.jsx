@@ -460,7 +460,7 @@ function Home() {
                   {">"}
                 </button>
               </div>
-              <div className="mt-26">
+              <div className="mt-30">
                 <img src={home8} alt="loadReview" />
               </div>
             </div>
