@@ -37,11 +37,11 @@ function CardProductMobile() {
               style={{ backgroundImage: `url(${imageMap[prod.image]})` }}
             ></div>
             <div className="absolute top-45 w-40 h-50 bg-white z-10 px-2 border border-transparent">
-              <p className="text-[#0b132a] text-xl">{prod.name}</p>
+              <p className="text-[#0b132a] text-xl">{prod.name_product}</p>
               <p className="text-[10px] text-[#4f5665] text-xl mt-2">
                 {prod.description}
               </p>
-              <p className="mt-1 text-[#ff8906] text-xl">{prod.price}</p>
+              <p className="mt-1 text-[#ff8906] text-xl">{prod.base_price}</p>
               <div className="flex flex-col gap-1">
                 <button className="cursor-pointer px-10 py-1 bg-[#ff8906] mt-2 rounded-sm text-black">
                   Buy
