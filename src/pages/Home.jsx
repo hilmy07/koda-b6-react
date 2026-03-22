@@ -5,7 +5,7 @@ import home3 from "../assets/home3.png";
 import home4 from "../assets/home4.png";
 import home5 from "../assets/home5.png";
 import home6 from "../assets/home6.png";
-import home7 from "../assets/home7.png";
+// import home7 from "../assets/home7.png";
 import home8 from "../assets/home8.png";
 import checklist from "../assets/checklist.png";
 import CardProduct from "../components/Home/CardProduct";
@@ -415,27 +415,48 @@ function Home() {
             </div>
             <div className="absolute mt-80 ml-5 mr-10">
               <h1 className="text-white text-3xl border-l-4 border-[#ff8906] pl-3 mt-4">
-                Viezh Robert
+                {current?.fullname}
               </h1>
-              <p className="text-[#ff8906] mt-1">Manager Coffee Shop</p>
+              <p className="text-[#ff8906] mt-1">Customer</p>
               <div className="mt-2">
-                <p className="text-white text-sm">
-                  "Wow... I am very happy to spend my whole day here. The wifi
-                  is
-                </p>
-                <p className="text-white text-sm">
+                <p className="text-white text-sm">{current?.message}</p>
+                {/* <p className="text-white text-sm">
                   good, and coffee and meals tho. I like it here!!Very
                 </p>
-                <p className="text-white text-sm">recomended!</p>
+                <p className="text-white text-sm">recomended!</p> */}
               </div>
-              <div className="mt-4">
-                <img src={home7} alt="review" />
+              <div className="flex items-center gap-2 mt-4">
+                {/* Bintang */}
+                <div className="flex gap-1">
+                  {Array.from({ length: current?.rating || 0 }).map((_, i) => (
+                    <span key={i} className="text-yellow-400 text-xl">
+                      ★
+                    </span>
+                  ))}
+                </div>
+
+                {/* Text rating */}
+                <span className="text-white text-sm font-medium">
+                  {current?.rating?.toFixed(1)}
+                </span>
               </div>
               <div className="absolute bottom-10 top-55 flex gap-4 z-20">
-                <button className="w-8 h-8 rounded-full bg-white shadow-md border flex items-center justify-center">
+                <button
+                  onClick={() => {
+                    console.log("PREV");
+                    prev();
+                  }}
+                  className="w-8 h-8 rounded-full bg-white shadow-md border flex items-center justify-center"
+                >
                   {"<"}
                 </button>
-                <button className="w-8 h-8 rounded-full bg-white shadow-md border flex items-center justify-center">
+                <button
+                  onClick={() => {
+                    console.log("NEXT");
+                    next();
+                  }}
+                  className="w-8 h-8 rounded-full bg-white shadow-md border flex items-center justify-center"
+                >
                   {">"}
                 </button>
               </div>
