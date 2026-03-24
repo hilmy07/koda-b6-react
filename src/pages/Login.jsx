@@ -14,6 +14,7 @@ import { FaEnvelope, FaLock } from "react-icons/fa";
 
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess, loginFail } from "../redux/slice/authSlice";
+import http from "../lib/http";
 
 function Login() {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ function Login() {
     },
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setError("");
 
     // 1) LOGIN ADMIN
@@ -66,6 +67,10 @@ function Login() {
 
     // 2) LOGIN USER (REDUX USERS)
     const user = users.find((u) => u.email === data.email);
+
+    const res = await http("https://hilmy-backend.camps.fahrul.id/auth");
+
+    console.log(res);
 
     if (!user) {
       setError("Email tidak ditemukan!");
