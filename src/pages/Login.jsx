@@ -68,9 +68,13 @@ function Login() {
     // 2) LOGIN USER (REDUX USERS)
     const user = users.find((u) => u.email === data.email);
 
-    const res = await http("/auth");
+    const userlogin = async () => {
+      const res = await http("/auth");
 
-    console.log(res);
+      console.log(res.data);
+    };
+
+    userlogin();
 
     if (!user) {
       setError("Email tidak ditemukan!");
