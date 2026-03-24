@@ -71,10 +71,7 @@ function Login() {
     const userlogin = async () => {
       const res = await http("/auth", null, {
         method: "POST",
-        body: {
-          email: "test@mail.com",
-          password: "123456",
-        },
+        body: data,
       });
 
       console.log(res.data);
