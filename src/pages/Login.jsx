@@ -69,7 +69,13 @@ function Login() {
     const user = users.find((u) => u.email === data.email);
 
     const userlogin = async () => {
-      const res = await http("/auth");
+      const res = await http("/auth", null, {
+        method: "POST",
+        body: {
+          email: "test@mail.com",
+          password: "123456",
+        },
+      });
 
       console.log(res.data);
     };
