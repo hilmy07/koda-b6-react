@@ -68,7 +68,7 @@ function Login() {
     // 2) LOGIN USER (REDUX USERS)
     const user = users.find((u) => u.email === data.email);
 
-    const res = await http("https://hilmy-backend.camps.fahrul.id/auth");
+    const res = await http("/auth");
 
     console.log(res);
 
