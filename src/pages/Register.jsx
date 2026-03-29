@@ -12,6 +12,7 @@ import bcrypt from "bcryptjs";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../redux/slice/authSlice";
 import { useForm } from "react-hook-form";
+import http from "../lib/http";
 
 function Register() {
   const dispatch = useDispatch();
@@ -27,38 +28,46 @@ function Register() {
   } = useForm({
     mode: "onSubmit",
     defaultValues: {
-      name: "",
+      fullname: "",
       email: "",
       password: "",
       confirmPassword: "",
     },
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     // cek email sudah ada
-    const emailExists = users.some((u) => u.email === data.email);
-    if (emailExists) {
-      alert("Email sudah terdaftar!");
-      return;
+    try {
+      await fetch(import.meta.env.VITE_BASE_URL + "/auth/new", {
+        body: JSON.stringify(data),
+        method: "POST",
+      });
+
+      alert("Register berhasil!");
+      navigate("/auth");
+    } catch {
+      alert("Register Error!");
     }
+    // const emailExists = users.some((u) => u.email === data.email);
+    // if (emailExists) {
+    //   alert("Email sudah terdaftar!");
+    //   return;
+    // }
 
     // hash password
-    const salt = bcrypt.genSaltSync(10);
-    const passwordHash = bcrypt.hashSync(data.password, salt);
+    // const salt = bcrypt.genSaltSync(10);
+    // const passwordHash = bcrypt.hashSync(data.password, salt);
 
-    const id = crypto.randomUUID();
+    // const id = crypto.randomUUID();
 
-    dispatch(
-      registerUser({
-        id,
-        name: data.name,
-        email: data.email,
-        passwordHash,
-      }),
-    );
-
-    alert("Register berhasil!");
-    navigate("/auth");
+    // dispatch(
+    //   registerUser({
+    //     id,
+    //     name: data.name,
+    //     email: data.email,
+    //     passwordHash,
+    //   }),
+    // );
   };
 
   return (
@@ -89,8 +98,8 @@ function Register() {
             label="Full Name"
             placeholder="Enter Your Full Name"
             icon={<FaUser />}
-            {...register("name", { required: "Nama wajib diisi" })}
-            error={errors.name?.message}
+            {...register("fullname", { required: "Nama wajib diisi" })}
+            error={errors.fullname?.message}
           />
 
           <Input

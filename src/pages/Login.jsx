@@ -65,8 +65,20 @@ function Login() {
       return;
     }
 
+    console.log(data);
     // 2) LOGIN USER (REDUX USERS)
-    const user = users.find((u) => u.email === data.email);
+    // const user = users.find((u) => u.email === data.email);
+    try {
+      const res = await fetch(import.meta.env.VITE_BASE_URL + "/auth", {
+        body: JSON.stringify(data),
+        method: "POST",
+      });
+
+      const body = await res.json();
+      console.log(body);
+    } catch {
+      alert("Invalid username or password");
+    }
 
     // const userlogin = async () => {
     //   const res = await http("/auth", null, {

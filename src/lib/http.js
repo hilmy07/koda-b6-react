@@ -1,4 +1,4 @@
-const BASE_URL = "https://hilmy-backend.camps.fahrul.id";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 async function http(url, body, opts = {}) {
   const headers = {
