@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import bcrypt from "bcryptjs";
 
 import logo from "../assets/logo.png";
 import textLogo from "../assets/textLogo.png";
@@ -12,19 +11,15 @@ import loginbg from "../assets/login.png";
 import Input from "../components/Input";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginSuccess, loginFail } from "../redux/slice/authSlice";
-import http from "../lib/http";
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const users = useSelector((state) => state.auth.users);
-
   const [error, setError] = useState("");
 
-  // ADMIN HARD CODE
   const adminUser = {
     email: "admin@mail.com",
     password: "123456",
@@ -36,115 +31,94 @@ function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    mode: "onSubmit",
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+  } = useForm();
 
   const onSubmit = async (data) => {
     setError("");
 
-    // 1) LOGIN ADMIN
-    if (
-      data.email === adminUser.email &&
-      data.password === adminUser.password
-    ) {
-      dispatch(
-        loginSuccess({
-          id: "admin",
-          name: adminUser.name,
-          email: adminUser.email,
-          role: "admin",
-        }),
-      );
-
-      navigate("/Dashboard");
-      return;
-    }
-
-    // console.log(data);
-    // 2) LOGIN USER (REDUX USERS)
-    // const user = users.find((u) => u.email === data.email);
     try {
+      // =========================
+      // 1. LOGIN ADMIN
+      // =========================
+      if (
+        data.email === adminUser.email &&
+        data.password === adminUser.password
+      ) {
+        dispatch(
+          loginSuccess({
+            id: "admin",
+            name: adminUser.name,
+            email: adminUser.email,
+            role: "admin",
+          }),
+        );
+
+        navigate("/Dashboard");
+        return;
+      }
+
+      // =========================
+      // 2. LOGIN VIA API
+      // =========================
       const res = await fetch(import.meta.env.VITE_BASE_URL + "/auth", {
-        body: JSON.stringify(data),
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       });
 
       const body = await res.json();
+
+      if (!res.ok) {
+        throw new Error(body.message || "Login gagal");
+      }
+
+      dispatch(
+        loginSuccess({
+          id: body.data?.id,
+          name: body.data?.name,
+          email: body.data?.email,
+          role: body.data?.role || "user",
+        }),
+      );
+
       navigate("/");
-      console.log(body);
-    } catch {
-      alert("Invalid username or password");
+    } catch (err) {
+      console.error(err);
+      setError("Email atau password salah");
+      dispatch(loginFail("Login gagal"));
     }
-
-    // const userlogin = async () => {
-    //   const res = await http("/auth", null, {
-    //     method: "POST",
-    //     body: data,
-    //   });
-
-    //   console.log(res.data);
-    // };
-
-    // userlogin();
-
-    if (!user) {
-      setError("Email tidak ditemukan!");
-      dispatch(loginFail("Email tidak ditemukan"));
-      return;
-    }
-
-    const match = bcrypt.compareSync(data.password, user.passwordHash);
-
-    if (!match) {
-      setError("Password salah!");
-      dispatch(loginFail("Password salah"));
-      return;
-    }
-
-    // sukses login user
-    dispatch(
-      loginSuccess({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: "user",
-      }),
-    );
-
-    navigate("/");
   };
 
-  const handleGoHome = () => {
-    navigate("/");
-  };
+  const handleGoHome = () => navigate("/");
 
   return (
     <div className="h-screen grid grid-cols-1 md:grid-cols-4 overflow-hidden">
+      {/* LEFT IMAGE */}
       <div
-        className="hidden md:block max-w-full bg-cover bg-center"
+        className="hidden md:block bg-cover bg-center"
         style={{ backgroundImage: `url(${loginbg})` }}
-      ></div>
+      />
 
+      {/* FORM */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col md:items-start px-8 my-2 col-span-3 md:ml-20"
+        className="flex flex-col px-8 my-2 col-span-3 md:ml-20"
       >
+        {/* LOGO */}
         <div
           onClick={handleGoHome}
           className="flex gap-6 mb-6 mt-20 cursor-pointer"
         >
           <img src={logo} alt="logo" />
-          <img src={textLogo} alt="logo" />
+          <img src={textLogo} alt="text logo" />
         </div>
 
         <div className="max-w-3xl w-full bg-white">
           <h2 className="text-2xl font-bold text-[#8E6447] mb-2">Login</h2>
 
+          {/* EMAIL */}
           <Input
             label="Email"
             type="email"
@@ -159,9 +133,10 @@ function Login() {
             })}
           />
           {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
           )}
 
+          {/* PASSWORD */}
           <Input
             label="Password"
             type="password"
@@ -169,18 +144,21 @@ function Login() {
             icon={<FaLock />}
             {...register("password", {
               required: "Password wajib diisi",
-              minLength: { value: 6, message: "Password minimal 6 karakter" },
+              minLength: {
+                value: 6,
+                message: "Password minimal 6 karakter",
+              },
             })}
           />
           {errors.password && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.password.message}
-            </p>
+            <p className="text-red-500 text-sm">{errors.password.message}</p>
           )}
 
-          {error && <div className="text-red-500 text-sm mb-3">{error}</div>}
+          {/* ERROR */}
+          {error && <p className="text-red-500 text-sm">{error}</p>}
 
-          <div className="flex justify-end mt-1">
+          {/* FORGOT PASSWORD */}
+          <div className="flex justify-end mt-2">
             <button
               type="button"
               className="text-orange-500 text-sm hover:underline"
@@ -190,13 +168,15 @@ function Login() {
             </button>
           </div>
 
+          {/* BUTTON */}
           <button
             type="submit"
-            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg mt-4 transition"
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg mt-4"
           >
             Login
           </button>
 
+          {/* REGISTER */}
           <p className="text-center text-sm text-gray-600 mt-4">
             Belum punya akun?{" "}
             <Link to="/auth/new" className="text-orange-500 hover:underline">
@@ -204,31 +184,28 @@ function Login() {
             </Link>
           </p>
 
+          {/* OR */}
           <div className="flex items-center mt-4">
             <hr className="grow border-gray-300" />
             <span className="px-2 text-gray-500 text-sm">Or</span>
             <hr className="grow border-gray-300" />
           </div>
 
-          {/* Social login */}
+          {/* SOCIAL */}
           <div className="flex gap-4 my-4">
             <button
               type="button"
-              className="flex-1 border border-gray-300 py-2 rounded-lg flex items-center justify-center hover:bg-gray-100 transition"
+              className="flex-1 border py-2 rounded-lg flex items-center justify-center hover:bg-gray-100"
             >
-              <span className="mr-2">
-                <img src={fb} alt="facebook" />
-              </span>
+              <img src={fb} alt="facebook" className="mr-2" />
               Facebook
             </button>
 
             <button
               type="button"
-              className="flex-1 border border-gray-300 py-2 rounded-lg flex items-center justify-center hover:bg-gray-100 transition"
+              className="flex-1 border py-2 rounded-lg flex items-center justify-center hover:bg-gray-100"
             >
-              <span className="mr-2">
-                <img src={google} alt="google" />
-              </span>
+              <img src={google} alt="google" className="mr-2" />
               Google
             </button>
           </div>
