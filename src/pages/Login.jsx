@@ -76,6 +76,7 @@ function Login() {
 
       const body = await res.json();
       console.log(body);
+      navigate("/");
     } catch {
       alert("Invalid username or password");
     }
