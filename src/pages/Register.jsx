@@ -7,6 +7,7 @@ import textLogo from "../assets/textLogo.png";
 import fb from "../assets/fb.png";
 import google from "../assets/google.png";
 import { Link, useNavigate } from "react-router-dom";
+import http from "../lib/http";
 
 import { useForm } from "react-hook-form";
 
@@ -30,21 +31,16 @@ function Register() {
 
   const onSubmit = async (data) => {
     try {
-      const res = await fetch(import.meta.env.VITE_BASE_URL + "/auth/new", {
+      const body = await http("/auth/new", null, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+        body: {
           fullName: data.fullname,
           email: data.email,
           password: data.password,
-        }),
+        },
       });
 
-      const body = await res.json();
-
-      if (!res.ok || !body.success) {
+      if (!body.success) {
         throw new Error(body.message || "Register gagal");
       }
 
