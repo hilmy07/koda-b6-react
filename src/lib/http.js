@@ -10,7 +10,7 @@ async function http(url, body, opts = {}) {
   }
   const response = await fetch(BASE_URL + url, {
     method: opts.method || "GET",
-    headers: headers,
+    headers,
     body: opts.body ? JSON.stringify(opts.body) : undefined,
   });
 

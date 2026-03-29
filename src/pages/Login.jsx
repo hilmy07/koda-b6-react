@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { http } from "../lib/http";
 
 import logo from "../assets/logo.png";
 import textLogo from "../assets/textLogo.png";
@@ -60,17 +61,12 @@ function Login() {
       // =========================
       // 2. LOGIN VIA API
       // =========================
-      const res = await fetch(import.meta.env.VITE_BASE_URL + "/auth", {
+      const body = await http("/auth", null, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+        body: data,
       });
 
-      const body = await res.json();
-
-      if (!res.ok) {
+      if (!body.success) {
         throw new Error(body.message || "Login gagal");
       }
 

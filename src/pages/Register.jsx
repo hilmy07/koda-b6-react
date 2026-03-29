@@ -8,17 +8,10 @@ import fb from "../assets/fb.png";
 import google from "../assets/google.png";
 import { Link, useNavigate } from "react-router-dom";
 
-import bcrypt from "bcryptjs";
-import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../redux/slice/authSlice";
 import { useForm } from "react-hook-form";
-import http from "../lib/http";
 
 function Register() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const users = useSelector((state) => state.auth.users);
 
   const {
     register,
@@ -36,52 +29,47 @@ function Register() {
   });
 
   const onSubmit = async (data) => {
-    // cek email sudah ada
     try {
-      await fetch(import.meta.env.VITE_BASE_URL + "/auth/new", {
-        body: JSON.stringify(data),
+      const res = await fetch(import.meta.env.VITE_BASE_URL + "/auth/new", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: data.fullname,
+          email: data.email,
+          password: data.password,
+        }),
       });
+
+      const body = await res.json();
+
+      if (!res.ok || !body.success) {
+        throw new Error(body.message || "Register gagal");
+      }
 
       alert("Register berhasil!");
       navigate("/auth");
-    } catch {
-      alert("Register Error!");
+    } catch (err) {
+      console.error(err);
+      alert(err.message || "Register error!");
     }
-    // const emailExists = users.some((u) => u.email === data.email);
-    // if (emailExists) {
-    //   alert("Email sudah terdaftar!");
-    //   return;
-    // }
-
-    // hash password
-    // const salt = bcrypt.genSaltSync(10);
-    // const passwordHash = bcrypt.hashSync(data.password, salt);
-
-    // const id = crypto.randomUUID();
-
-    // dispatch(
-    //   registerUser({
-    //     id,
-    //     name: data.name,
-    //     email: data.email,
-    //     passwordHash,
-    //   }),
-    // );
   };
 
   return (
     <div className="h-screen grid grid-cols-1 md:grid-cols-4 overflow-hidden">
-      {/* LEFT SIDE */}
+      {/* LEFT */}
       <div
-        className="hidden md:block max-w-full bg-cover bg-center"
+        className="hidden md:block bg-cover bg-center"
         style={{ backgroundImage: `url(${background})` }}
-      ></div>
+      />
 
-      <div className="flex flex-col md:items-start px-8 mt-8 col-span-3 md:ml-20">
-        <div className="flex gap-6 mb-2">
+      {/* RIGHT */}
+      <div className="flex flex-col px-8 mt-8 col-span-3 md:ml-20">
+        {/* LOGO */}
+        <div className="flex gap-6 mb-4">
           <img src={logo} alt="logo" />
-          <img src={textLogo} alt="logo" />
+          <img src={textLogo} alt="text logo" />
         </div>
 
         {/* FORM */}
@@ -107,7 +95,9 @@ function Register() {
             type="email"
             placeholder="Enter Your Email"
             icon={<FaEnvelope />}
-            {...register("email", { required: "Email wajib diisi" })}
+            {...register("email", {
+              required: "Email wajib diisi",
+            })}
             error={errors.email?.message}
           />
 
@@ -118,7 +108,10 @@ function Register() {
             icon={<FaLock />}
             {...register("password", {
               required: "Password wajib diisi",
-              minLength: { value: 6, message: "Minimal 6 karakter" },
+              minLength: {
+                value: 6,
+                message: "Minimal 6 karakter",
+              },
             })}
             error={errors.password?.message}
           />
@@ -131,14 +124,14 @@ function Register() {
             {...register("confirmPassword", {
               required: "Confirm password wajib diisi",
               validate: (value) =>
-                value === getValues("password") || "Password tidak salah",
+                value === getValues("password") || "Password tidak sama",
             })}
             error={errors.confirmPassword?.message}
           />
 
           <button
             type="submit"
-            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg transition"
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg mt-2"
           >
             Register
           </button>
@@ -150,30 +143,28 @@ function Register() {
             </Link>
           </p>
 
-          <div className="flex items-center my-2">
+          {/* OR */}
+          <div className="flex items-center my-3">
             <hr className="grow border-gray-300" />
             <span className="px-2 text-gray-500 text-sm">Or</span>
             <hr className="grow border-gray-300" />
           </div>
 
+          {/* SOCIAL */}
           <div className="flex gap-4">
             <button
               type="button"
-              className="flex-1 border border-gray-300 py-2 rounded-lg flex items-center justify-center hover:bg-gray-100 transition"
+              className="flex-1 border py-2 rounded-lg flex items-center justify-center hover:bg-gray-100"
             >
-              <span className="mr-2">
-                <img src={fb} alt="facebook" />
-              </span>
+              <img src={fb} alt="facebook" className="mr-2" />
               Facebook
             </button>
 
             <button
               type="button"
-              className="flex-1 border border-gray-300 py-2 rounded-lg flex items-center justify-center hover:bg-gray-100 transition"
+              className="flex-1 border py-2 rounded-lg flex items-center justify-center hover:bg-gray-100"
             >
-              <span className="mr-2">
-                <img src={google} alt="google" />
-              </span>
+              <img src={google} alt="google" className="mr-2" />
               Google
             </button>
           </div>
