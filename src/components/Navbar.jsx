@@ -7,6 +7,7 @@ import textLogo from "../assets/textLogo.png";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../redux/slice/authSlice";
+import { persistor } from "../redux/store";
 
 export default function Navbar({ variant = "dark" }) {
   // const { isLoggedIn, logout } = useContext(AuthContext);
@@ -30,6 +31,7 @@ export default function Navbar({ variant = "dark" }) {
   const handleLogout = () => {
     // logout();
     dispatch(logoutUser());
+    persistor.purge();
     navigate("/");
   };
 

@@ -47,8 +47,6 @@ const authSlice = createSlice({
       state.token = null;
       state.isLoggedIn = false;
       state.error = null;
-
-      persistor.purge();
     },
   },
 });
