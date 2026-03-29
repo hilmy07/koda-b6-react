@@ -1,10 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { persistor } from "../store";
 
 const initialState = {
   users: [],
   currentUser: null,
-  token: null,
   isLoggedIn: false,
   error: null,
 };
@@ -28,10 +26,7 @@ const authSlice = createSlice({
     },
 
     loginSuccess: (state, action) => {
-      const { token, ...user } = action.payload;
-
-      state.currentUser = user;
-      state.token = token;
+      state.currentUser = action.payload;
       state.isLoggedIn = true;
       state.error = null;
     },
@@ -44,7 +39,6 @@ const authSlice = createSlice({
 
     logoutUser: (state) => {
       state.currentUser = null;
-      state.token = null;
       state.isLoggedIn = false;
       state.error = null;
     },
