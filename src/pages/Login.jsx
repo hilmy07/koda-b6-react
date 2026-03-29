@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { http } from "../lib/http";
+import http from "../lib/http";
 
 import logo from "../assets/logo.png";
 import textLogo from "../assets/textLogo.png";
