@@ -65,7 +65,7 @@ function Login() {
       return;
     }
 
-    console.log(data);
+    // console.log(data);
     // 2) LOGIN USER (REDUX USERS)
     // const user = users.find((u) => u.email === data.email);
     try {
