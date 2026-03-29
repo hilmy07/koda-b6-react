@@ -84,6 +84,7 @@ function Login() {
       );
 
       navigate("/");
+      console.log(body);
     } catch (err) {
       console.error(err);
       setError("Email atau password salah");
