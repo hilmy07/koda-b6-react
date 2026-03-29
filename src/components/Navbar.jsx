@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaSearch, FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
@@ -9,7 +9,8 @@ import { useDispatch } from "react-redux";
 import { logoutUser } from "../redux/slice/authSlice";
 
 export default function Navbar({ variant = "dark" }) {
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  // const { isLoggedIn, logout } = useContext(AuthContext);
+  const { currentUser, isLoggedIn } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,7 +28,7 @@ export default function Navbar({ variant = "dark" }) {
   const handleSignIn = () => navigate("/auth");
   const handleSignUp = () => navigate("/auth/new");
   const handleLogout = () => {
-    logout();
+    // logout();
     dispatch(logoutUser());
     navigate("/");
   };
@@ -94,12 +95,17 @@ export default function Navbar({ variant = "dark" }) {
           </div>
 
           {isLoggedIn ? (
-            <button
-              onClick={handleLogout}
-              className={`px-4 py-2 border ${borderColor} rounded text-sm hover:bg-white hover:text-black transition`}
-            >
-              Logout
-            </button>
+            <div className="flex items-center gap-4">
+              <span className="text-sm font-medium">
+                Hi, {currentUser?.fullName}
+              </span>
+              <button
+                onClick={handleLogout}
+                className={`px-4 py-2 border ${borderColor} rounded text-sm hover:bg-white hover:text-black transition`}
+              >
+                Logout
+              </button>
+            </div>
           ) : (
             <>
               <button
@@ -160,12 +166,15 @@ export default function Navbar({ variant = "dark" }) {
 
           <div className="flex flex-col gap-3">
             {isLoggedIn ? (
-              <button
-                onClick={handleLogout}
-                className={`px-4 py-2 border ${borderColor} rounded`}
-              >
-                Logout
-              </button>
+              <>
+                <span className="text-sm">Hi, {currentUser?.fullName}</span>
+                <button
+                  onClick={handleLogout}
+                  className={`px-4 py-2 border ${borderColor} rounded`}
+                >
+                  Logout
+                </button>
+              </>
             ) : (
               <>
                 <button
