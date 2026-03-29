@@ -76,10 +76,12 @@ function Login() {
 
       dispatch(
         loginSuccess({
-          id: body.data?.id,
-          name: body.data?.name,
-          email: body.data?.email,
-          role: body.data?.role || "user",
+          email: body.email,
+          fullName: body.fullName,
+          profileImg: body.profileImg,
+          token: body.token,
+          message: body.message,
+          success: body.success,
         }),
       );
 

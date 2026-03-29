@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   users: [],
   currentUser: null,
+  token: null,
+  message: null,
   isLoggedIn: false,
   error: null,
 };
@@ -26,7 +28,16 @@ const authSlice = createSlice({
     },
 
     loginSuccess: (state, action) => {
-      state.currentUser = action.payload;
+      const { token, message, success, ...user } = action.payload;
+
+      if (!success) {
+        state.error = "Login gagal";
+        return;
+      }
+
+      state.currentUser = user;
+      state.token = token;
+      state.message = message;
       state.isLoggedIn = true;
       state.error = null;
     },
@@ -39,6 +50,8 @@ const authSlice = createSlice({
 
     logoutUser: (state) => {
       state.currentUser = null;
+      state.token = null;
+      state.message = null;
       state.isLoggedIn = false;
       state.error = null;
     },
