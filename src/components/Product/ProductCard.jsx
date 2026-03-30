@@ -101,7 +101,7 @@ function ProductCard({ page }) {
 
               <div className="absolute top-40 left-0 w-40 h-80 bg-white z-10 px-2 border border-transparent">
                 <p className="text-[#0b132a] text-xl">{prod.name_product}</p>
-                <p className="text-[15px] text-[#4f5665] text-sm mt-2">
+                <p className="text-[15px] text-[#4f5665] text-sm mt-2 line-clamp-3">
                   {prod.description}
                 </p>
                 <div className="mt-2">
