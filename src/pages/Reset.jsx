@@ -28,7 +28,9 @@ function Reset() {
       });
 
       if (!body.success) {
-        throw new Error(body.message || "Reset Failed");
+        throw new Error("Reset Failed");
+      } else {
+        console.log(body.message);
       }
 
       navigate("/auth");

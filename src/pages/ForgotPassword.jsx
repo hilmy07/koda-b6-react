@@ -32,7 +32,9 @@ function ForgotPassword() {
       });
 
       if (!body.success) {
-        throw new Error(body.message || "Forgot Failed");
+        throw new Error("Forgot Failed");
+      } else {
+        console.log(body.message);
       }
 
       navigate("/auth/reset-password");

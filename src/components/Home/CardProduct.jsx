@@ -40,7 +40,7 @@ function CardProduct() {
         <div key={prod.id} className="relative mt-50 ml-3">
           <div
             className="w-70 h-70 bg-cover bg-center"
-            style={{ backgroundImage: `url(${imageMap[prod.image]})` }}
+            style={{ backgroundImage: `url(${prod.image})` }}
           ></div>
           <div className="absolute top-59 left-2 w-66 h-52 bg-white z-10 px-3 py-2 shadow-md flex flex-col justify-between">
             <div>
