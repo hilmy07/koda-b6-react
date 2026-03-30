@@ -107,7 +107,7 @@ function Product() {
             minPrice={0}
             maxPrice={700}
           /> */}
-          <ProductCard />
+          <ProductCard page={activeDot} />
         </div>
       </div>
 
@@ -129,5 +129,3 @@ function Product() {
 }
 
 export default Product;
-
-
