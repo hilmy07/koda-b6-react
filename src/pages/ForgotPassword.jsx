@@ -20,6 +20,10 @@ function ForgotPassword() {
     navigate("/"); // ⬅️ arahkan ke halaman Home
   };
 
+  const handleGoReset = () => {
+    navigate("/auth/reset-password");
+  };
+
   const onSubmit = async (data) => {
     try {
       const body = await http("/auth/forgot-password", null, {
@@ -84,7 +88,10 @@ function ForgotPassword() {
           )}
 
           {/* Submit Button */}
-          <button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg mt-4 transition">
+          <button
+            onClick={handleGoReset}
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg mt-4 transition"
+          >
             Submit
           </button>
         </form>
