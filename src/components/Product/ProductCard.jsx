@@ -39,7 +39,7 @@ function ProductCard({ page }) {
   return (
     <>
       <div className="lg:block hidden">
-        <form className="grid grid-cols-[min-content_min-content] gap-2 justify-center pb-4">
+        <form className="grid grid-cols-[min-content_min-content] gap-2 justify-center">
           {products.map((prod) => (
             <div key={prod.id} className="relative ml-20 mb-50">
               <div
@@ -51,7 +51,7 @@ function ProductCard({ page }) {
                 <p>FLASH SALE!</p>
               </div>
 
-              <div className="absolute top-65 left-2 w-104 h-55 bg-white z-10 px-2 shadow-md border border-transparent">
+              <div className="absolute top-65 left-2 w-104 h-60 bg-white z-10 px-2 shadow-md border border-transparent">
                 <p className="text-[#0b132a] text-4xl">{prod.name_product}</p>
                 <p className="text-[15px] text-[#4f5665] text-xl mt-2 line-clamp-3">
                   {prod.description}
@@ -87,7 +87,7 @@ function ProductCard({ page }) {
 
       {/* mobile tetap sama */}
       <div className="lg:hidden">
-        <form className="grid grid-cols-[min-content_min-content] gap-2 justify-center pb-4">
+        <form className="grid grid-cols-[min-content_min-content] gap-2 justify-center">
           {products.map((prod) => (
             <div key={prod.id} className="relative ml-4 mb-90">
               <div
