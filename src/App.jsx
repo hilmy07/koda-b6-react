@@ -18,6 +18,7 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import ProductList from "./pages/AdminPage/ProductList";
+import Reset from "./pages/Reset";
 
 function App() {
   const router = createBrowserRouter([
@@ -37,6 +38,10 @@ function App() {
     {
       path: "/auth/forgot",
       element: <ForgotPassword />,
+    },
+    {
+      path: "/auth/reset-password",
+      element: <Reset />,
     },
     {
       path: "/Product",

@@ -67,7 +67,7 @@ function Login() {
       });
 
       if (!body.success) {
-        throw new Error(body.message || "Login gagal");
+        throw new Error(body.message || "Login Failed");
       }
 
       dispatch(
