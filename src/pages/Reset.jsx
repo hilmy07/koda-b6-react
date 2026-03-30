@@ -38,6 +38,10 @@ function Reset() {
     }
   };
 
+  const handleGoLogin = () => {
+    navigate("/auth");
+  };
+
   return (
     <div className="h-screen grid grid-cols-1 md:grid-cols-4 overflow-hidden">
       {/* LEFT SIDE - Background pakai Tailwind */}
@@ -109,7 +113,10 @@ function Reset() {
           )}
 
           {/* Login Button */}
-          <button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg mt-4 transition">
+          <button
+            onClick={handleGoLogin}
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg mt-4 transition"
+          >
             Submit
           </button>
         </form>
