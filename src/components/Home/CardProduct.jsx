@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import product1 from "../../assets/product1.png";
-import product2 from "../../assets/product2.png";
-import product3 from "../../assets/product3.png";
-import product4 from "../../assets/product4.png";
+// import product1 from "../../assets/product1.png";
+// import product2 from "../../assets/product2.png";
+// import product3 from "../../assets/product3.png";
+// import product4 from "../../assets/product4.png";
 import cart from "../../assets/ShoppingCart.png";
 import { useNavigate } from "react-router";
 import http from "../../lib/http";
@@ -13,12 +13,12 @@ function CardProduct() {
   const navigate = useNavigate();
 
   // Mapping nama file ke modul image
-  const imageMap = {
-    "americano.jpg": product1,
-    "mocha.jpg": product2,
-    "vanilla.jpg": product3,
-    "thaitea.jpg": product4,
-  };
+  // const imageMap = {
+  //   "americano.jpg": product1,
+  //   "mocha.jpg": product2,
+  //   "vanilla.jpg": product3,
+  //   "thaitea.jpg": product4,
+  // };
 
   const handleDetailProduct = (id) => {
     navigate(`/product/${id}`);

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import product1 from "../../assets/product1.png";
-import product2 from "../../assets/product2.png";
-import product3 from "../../assets/product3.png";
-import product4 from "../../assets/product4.png";
+// import product1 from "../../assets/product1.png";
+// import product2 from "../../assets/product2.png";
+// import product3 from "../../assets/product3.png";
+// import product4 from "../../assets/product4.png";
 import cart from "../../assets/ShoppingCart.png";
 import http from "../../lib/http";
 
@@ -10,12 +10,12 @@ function CardProductMobile() {
   const [products, setProducts] = useState([]);
 
   // Mapping nama file ke modul image
-  const imageMap = {
-    "americano.jpg": product1,
-    "mocha.jpg": product2,
-    "vanilla.jpg": product3,
-    "thaitea.jpg": product4,
-  };
+  // const imageMap = {
+  //   "americano.jpg": product1,
+  //   "mocha.jpg": product2,
+  //   "vanilla.jpg": product3,
+  //   "thaitea.jpg": product4,
+  // };
 
   useEffect(() => {
     const getDataProducts = async () => {
@@ -34,7 +34,7 @@ function CardProductMobile() {
           <div key={prod.id} className="relative mt-50 mx-3 mb-4">
             <div
               className="w-40 h-50 bg-cover bg-center"
-              style={{ backgroundImage: `url(${imageMap[prod.image]})` }}
+              style={{ backgroundImage: `url(${prod.image})` }}
             ></div>
             <div className="absolute top-45 w-40 h-50 bg-white z-10 px-2 border border-transparent">
               <p className="text-[#0b132a] text-xl line-clamp-1">
