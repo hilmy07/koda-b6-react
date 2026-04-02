@@ -12,14 +12,6 @@ function CardProduct() {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
-  // Mapping nama file ke modul image
-  // const imageMap = {
-  //   "americano.jpg": product1,
-  //   "mocha.jpg": product2,
-  //   "vanilla.jpg": product3,
-  //   "thaitea.jpg": product4,
-  // };
-
   const handleDetailProduct = (id) => {
     navigate(`/product/${id}`);
   };

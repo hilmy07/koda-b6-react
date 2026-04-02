@@ -92,21 +92,6 @@ function Product() {
           Our <span className="text-[#8e6447]">Product</span>
         </h2>
         <div className="flex">
-          {/* <FilterSidebar
-            values={filters}
-            onChange={setFilters}
-            onApply={() => {}}
-            onReset={() =>
-              setFilters({
-                search: "",
-                categories: {},
-                sortBy: "flash",
-                price: [0, 700],
-              })
-            }
-            minPrice={0}
-            maxPrice={700}
-          /> */}
           <ProductCard page={activeDot} />
         </div>
       </div>
