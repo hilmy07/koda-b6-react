@@ -5,11 +5,10 @@ import home3 from "../assets/home3.png";
 import home4 from "../assets/home4.png";
 import home5 from "../assets/home5.png";
 import home6 from "../assets/home6.png";
-// import home7 from "../assets/home7.png";
 import home8 from "../assets/home8.png";
 import checklist from "../assets/checklist.png";
-import CardProduct from "../components/Home/CardProduct";
-import CardProductMobile from "../components/Home/CardProductMobile";
+import { CardProduct, CardProductMobile } from "../components/Home/CardProduct";
+// import CardProductMobile from "../components/Home/CardProductMobile";
 import ChatWidget from "../components/Home/ChatWidget";
 import http from "../lib/http";
 
