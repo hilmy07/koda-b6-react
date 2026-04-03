@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import product1 from "../../assets/product1.png";
-// import product2 from "../../assets/product2.png";
-// import product3 from "../../assets/product3.png";
-// import product4 from "../../assets/product4.png";
 import cart from "../../assets/ShoppingCart.png";
 import http from "../../lib/http";
 
@@ -35,9 +31,9 @@ function CardProductMobile() {
               <p className="text-[10px] text-[#4f5665] text-xl mt-2 line-clamp-3">
                 {prod.description}
               </p>
-              <div className="flex gap-1 mt-2">
+              <div className="flex gap-1 mt-1">
                 {Array.from({ length: prod.rating }).map((_, i) => (
-                  <span key={i} className="text-yellow-400 text-xl">
+                  <span key={i} className="text-yellow-400 text-lg">
                     ★
                   </span>
                 ))}
