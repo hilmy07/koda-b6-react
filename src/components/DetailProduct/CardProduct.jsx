@@ -36,7 +36,7 @@ function CardProduct({ limit = 3, excludeId = null }) {
               style={{ backgroundImage: `url(${prod.image})` }}
             ></div>
           </Link>
-          <div className="absolute top-70 left-2 w-80 h-45 bg-white z-10 px-2 shadow-md border border-transparent">
+          <div className="absolute top-70 left-2 w-80 h-50 bg-white z-10 px-2 shadow-md border border-transparent">
             <Link to={`/product/${prod.id}`}>
               <p className="text-[#0b132a] text-2xl hover:underline cursor-pointer">
                 {prod.name_product}
@@ -46,6 +46,14 @@ function CardProduct({ limit = 3, excludeId = null }) {
             <p className="text-[#4f5665] text-sm mt-2 line-clamp-3">
               {prod.description}
             </p>
+
+            <div className="flex gap-1">
+              {Array.from({ length: prod.rating }).map((_, i) => (
+                <span key={i} className="text-yellow-400 text-xl">
+                  ★
+                </span>
+              ))}
+            </div>
 
             <p className="mt-1 text-[#ff8906] text-xl">{prod.base_price}</p>
 
