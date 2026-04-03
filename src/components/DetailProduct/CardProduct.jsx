@@ -55,7 +55,7 @@ function CardProduct({ limit = 3, excludeId = null }) {
               ))}
             </div>
 
-            <p className="mt-1 text-[#ff8906] text-xl">{prod.base_price}</p>
+            <p className="text-[#ff8906] text-xl">{prod.base_price}</p>
 
             <div className="flex gap-1">
               <Link
