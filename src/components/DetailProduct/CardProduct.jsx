@@ -1,26 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import http from "../../lib/http";
-
-// import product1 from "../../assets/product1.png";
-// import product2 from "../../assets/product2.png";
-// import product3 from "../../assets/product3.png";
-// import product4 from "../../assets/product4.png";
-// import product5 from "../../assets/product5.png";
-// import product6 from "../../assets/product6.png";
 import cart from "../../assets/ShoppingCart.png";
 
 function CardProduct({ limit = 3, excludeId = null }) {
   const [products, setProducts] = useState([]);
-
-  // const imageMap = {
-  //   "product1.png": product1,
-  //   "product2.png": product2,
-  //   "product3.png": product3,
-  //   "product4.png": product4,
-  //   "product5.png": product5,
-  //   "product6.png": product6,
-  // };
 
   useEffect(() => {
     const getDataProducts = async () => {
@@ -59,7 +43,7 @@ function CardProduct({ limit = 3, excludeId = null }) {
               </p>
             </Link>
 
-            <p className="text-[10px] text-[#4f5665] text-xl mt-2">
+            <p className="text-[#4f5665] text-sm mt-2 line-clamp-3">
               {prod.description}
             </p>
 
