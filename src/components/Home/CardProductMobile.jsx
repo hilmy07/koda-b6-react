@@ -9,14 +9,6 @@ import http from "../../lib/http";
 function CardProductMobile() {
   const [products, setProducts] = useState([]);
 
-  // Mapping nama file ke modul image
-  // const imageMap = {
-  //   "americano.jpg": product1,
-  //   "mocha.jpg": product2,
-  //   "vanilla.jpg": product3,
-  //   "thaitea.jpg": product4,
-  // };
-
   useEffect(() => {
     const getDataProducts = async () => {
       const result = await http("/recommended-products");
@@ -43,6 +35,13 @@ function CardProductMobile() {
               <p className="text-[10px] text-[#4f5665] text-xl mt-2 line-clamp-3">
                 {prod.description}
               </p>
+              <div className="flex gap-1 mt-2">
+                {Array.from({ length: prod.rating }).map((_, i) => (
+                  <span key={i} className="text-yellow-400 text-xl">
+                    ★
+                  </span>
+                ))}
+              </div>
               <p className="mt-1 text-[#ff8906] text-xl">{prod.base_price}</p>
               <div className="flex flex-col gap-1">
                 <button className="cursor-pointer px-10 py-1 bg-[#ff8906] mt-2 rounded-sm text-black">
