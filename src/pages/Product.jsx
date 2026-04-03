@@ -98,13 +98,13 @@ function Product() {
 
       <div className="lg:block hidden">
         <div className="ml-100">
-          <DotsPager page={activeDot} count={4} onChange={setActiveDot} />
+          <DotsPager page={activeDot} count={10} onChange={setActiveDot} />
         </div>
       </div>
 
       <div className="lg:hidden ">
         <div className="ml-2">
-          <DotsPager page={activeDot} count={4} onChange={setActiveDot} />
+          <DotsPager page={activeDot} count={10} onChange={setActiveDot} />
         </div>
       </div>
 
