@@ -108,8 +108,12 @@ function ProductCard({ page }) {
                 <p className="text-[15px] text-[#4f5665] text-sm mt-2 line-clamp-3">
                   {prod.description}
                 </p>
-                <div className="mt-2">
-                  <img src={rating} alt="rating" />
+                <div className="flex gap-1">
+                  {Array.from({ length: prod.rating }).map((_, i) => (
+                    <span key={i} className="text-yellow-400 text-lg">
+                      ★
+                    </span>
+                  ))}
                 </div>
                 <div className="flex gap-5 mt-2 items-center">
                   <p className="text-[#ff8906] text-xl">
