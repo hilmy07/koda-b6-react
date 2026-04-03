@@ -31,7 +31,7 @@ function CardProductMobile() {
               <p className="text-[#4f5665] mt-2 line-clamp-3">
                 {prod.description}
               </p>
-              <div className="flex gap-1 mt-1">
+              <div className="flex gap-1">
                 {Array.from({ length: prod.rating }).map((_, i) => (
                   <span key={i} className="text-yellow-400 text-lg">
                     ★
