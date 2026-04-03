@@ -32,9 +32,11 @@ function Product() {
   const handleChangePage = (newPage) => {
     setActiveDot(newPage);
 
-    setSearchParams({
-      page: newPage,
-    });
+    const path = window.location.pathname.replace(/\/+$/, "");
+
+    setSearchParams(
+      window.history.replaceState(null, "", `${path}?page=${newPage}`),
+    );
   };
 
   return (
