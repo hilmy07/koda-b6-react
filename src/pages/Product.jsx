@@ -29,7 +29,7 @@ function Product() {
     price: [0, 700],
   });
 
-  const handleChangePage = (newPage) => {
+  const handleChangePage = ({ page: newPage }) => {
     setActiveDot(newPage);
 
     setSearchParams({
