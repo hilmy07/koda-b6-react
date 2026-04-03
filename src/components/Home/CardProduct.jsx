@@ -45,7 +45,7 @@ function CardProduct() {
               </p>
             </div>
 
-            <div className="flex gap-1 mt-2">
+            <div className="flex gap-1">
               {Array.from({ length: prod.rating }).map((_, i) => (
                 <span key={i} className="text-yellow-400 text-xl">
                   ★

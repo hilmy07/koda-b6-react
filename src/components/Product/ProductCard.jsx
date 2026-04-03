@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import cart from "../../assets/ShoppingCart.png";
-import rating from "../../assets/rating.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/slice/cartSlice";
@@ -27,7 +26,7 @@ function ProductCard({ page }) {
         );
         const data = await res.json();
 
-        setProducts(data.products); // 🔥 penting
+        setProducts(data.products); 
       } catch (err) {
         console.error(err);
       }
@@ -44,7 +43,7 @@ function ProductCard({ page }) {
             <div key={prod.id} className="relative ml-20 mb-50">
               <div
                 className="w-108 h-80 bg-cover bg-center"
-                style={{ backgroundImage: `url(${prod.image})` }} // 🔥 langsung dari backend
+                style={{ backgroundImage: `url(${prod.image})` }}
               ></div>
 
               <div className="absolute px-4 py-2 top-5 text-white text-xl left-5 rounded-3xl bg-red-700">
