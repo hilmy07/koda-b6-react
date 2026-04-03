@@ -28,7 +28,7 @@ function CardProductMobile() {
               <p className="text-[#0b132a] text-xl line-clamp-1">
                 {prod.name_product}
               </p>
-              <p className="text-[#4f5665] mt-2 line-clamp-3">
+              <p className="text-[#4f5665] text-sm mt-2 line-clamp-3">
                 {prod.description}
               </p>
               <div className="flex gap-1">
