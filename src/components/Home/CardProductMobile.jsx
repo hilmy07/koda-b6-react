@@ -19,7 +19,7 @@ function CardProductMobile() {
     <>
       <form className="grid grid-cols-2 gap-2 mb-60">
         {products.map((prod) => (
-          <div key={prod.id} className="relative mt-50 mx-3 mb-6">
+          <div key={prod.id} className="relative mt-50 mx-3 mb-10">
             <div
               className="w-40 h-50 bg-cover bg-center"
               style={{ backgroundImage: `url(${prod.image})` }}
