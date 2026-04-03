@@ -104,7 +104,7 @@ function ProductCard({ page }) {
               </div>
 
               <div className="absolute top-40 left-0 w-40 h-80 bg-white z-10 px-2 border border-transparent">
-                <p className="text-[#0b132a] text-xl line-clamp-1">
+                <p className="text-[#0b132a] text-xl truncate">
                   {prod.name_product}
                 </p>
                 <p className="text-[15px] text-[#4f5665] text-sm mt-2 line-clamp-3">
