@@ -25,7 +25,7 @@ function CardProduct({ limit = 3, excludeId = null }) {
   useEffect(() => {
     const getDataProducts = async () => {
       try {
-        const res = await http("/product"); // ambil semua product
+        const res = await http("/recommended-products");
 
         let result = res.data?.products || res.data || [];
 
