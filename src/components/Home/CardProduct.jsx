@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import http from "../../lib/http";
 
 export function CardProduct() {
-  // const [products, setProducts] = useState([]);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 

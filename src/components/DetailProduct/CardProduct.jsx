@@ -22,18 +22,23 @@ function CardProduct({ limit = 3, excludeId = null }) {
   };
 
   useEffect(() => {
-    fetch("/data/products.json")
-      .then((res) => res.json())
-      .then((data) => {
-        let result = data;
+    const getDataProducts = async () => {
+      try {
+        const res = await http("/product"); // ambil semua product
+
+        let result = res.data?.products || res.data || [];
 
         if (excludeId !== null) {
           result = result.filter((p) => p.id !== Number(excludeId));
         }
 
         setProducts(result.slice(0, limit));
-      })
-      .catch((err) => console.error(err));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    getDataProducts();
   }, [limit, excludeId]);
 
   return (
