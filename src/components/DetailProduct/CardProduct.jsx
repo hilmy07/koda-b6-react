@@ -60,14 +60,14 @@ function CardProduct({ limit = 3, excludeId = null }) {
             <div className="flex gap-1">
               <Link
                 to={`/product/${prod.id}`}
-                className="cursor-pointer px-30 py-1 bg-[#ff8906] mt-5 rounded-sm text-black text-center"
+                className="cursor-pointer px-30 py-1 bg-[#ff8906] mt-2 rounded-sm text-black text-center"
               >
                 Buy
               </Link>
 
               <button
                 type="button"
-                className="cursor-pointer px-2 py-0.5 mt-5 rounded-sm text-black border-2 border-[#ff8906]"
+                className="cursor-pointer px-2 py-0.5 mt-2 rounded-sm text-black border-2 border-[#ff8906]"
               >
                 <img src={cart} alt="cart" className="w-4 h-4" />
               </button>
