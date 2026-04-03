@@ -40,7 +40,6 @@ function CardProduct({ limit = 3, excludeId = null }) {
     <div className="flex flex-wrap justify-center gap-10">
       {products.map((prod) => (
         <div key={prod.id} className="relative ml-3">
-          {/* ✅ KLIK GAMBAR -> DETAIL */}
           <Link to={`/product/${prod.id}`}>
             <div
               className="w-84 h-84 bg-cover bg-center"
@@ -49,7 +48,6 @@ function CardProduct({ limit = 3, excludeId = null }) {
           </Link>
 
           <div className="absolute top-70 left-2 w-80 h-45 bg-white z-10 px-2 shadow-md border border-transparent">
-            {/* ✅ KLIK NAMA -> DETAIL */}
             <Link to={`/product/${prod.id}`}>
               <p className="text-[#0b132a] text-2xl hover:underline cursor-pointer">
                 {prod.name}
@@ -63,7 +61,6 @@ function CardProduct({ limit = 3, excludeId = null }) {
             <p className="mt-1 text-[#ff8906] text-xl">{prod.price}</p>
 
             <div className="flex gap-1">
-              {/* ✅ KLIK BUY -> DETAIL */}
               <Link
                 to={`/product/${prod.id}`}
                 className="cursor-pointer px-30 py-1 bg-[#ff8906] mt-5 rounded-sm text-black text-center"
