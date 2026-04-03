@@ -26,7 +26,7 @@ function ProductCard({ page }) {
         );
         const data = await res.json();
 
-        setProducts(data.products); 
+        setProducts(data.products);
       } catch (err) {
         console.error(err);
       }
@@ -56,8 +56,13 @@ function ProductCard({ page }) {
                   {prod.description}
                 </p>
                 <div className="flex gap-1 mt-2">
-                  {Array.from({ length: prod.rating }).map((_, i) => (
-                    <span key={i} className="text-yellow-400 text-xl">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <span
+                      key={i}
+                      className={`text-xl ${
+                        i < prod.rating ? "text-yellow-400" : "text-gray-300"
+                      }`}
+                    >
                       ★
                     </span>
                   ))}
