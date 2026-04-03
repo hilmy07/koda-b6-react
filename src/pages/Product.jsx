@@ -96,7 +96,7 @@ function Product() {
             minPrice={0}
             maxPrice={700}
           />
-          <ProductCard page={activeDot} />
+          <ProductCard page={handleChangePage} />
         </div>
       </div>
 
@@ -105,7 +105,7 @@ function Product() {
           Our <span className="text-[#8e6447]">Product</span>
         </h2>
         <div className="flex">
-          <ProductCard page={activeDot} />
+          <ProductCard page={handleChangePage} />
         </div>
       </div>
 
