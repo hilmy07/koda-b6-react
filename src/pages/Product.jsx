@@ -8,9 +8,14 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Input from "../components/Input";
 import { FaSearch } from "react-icons/fa";
+import { useSearchParams } from "react-router-dom";
 
 function Product() {
-  const [activeDot, setActiveDot] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const page = Number(searchParams.get("page")) || 1;
+  const [activeDot, setActiveDot] = useState(page);
+
   const [filters, setFilters] = useState({
     search: "",
     categories: {
@@ -23,6 +28,14 @@ function Product() {
     sortBy: "flash",
     price: [0, 700],
   });
+
+  const handleChangePage = (newPage) => {
+    setActiveDot(newPage);
+
+    setSearchParams({
+      page: newPage,
+    });
+  };
 
   return (
     <>
@@ -98,13 +111,13 @@ function Product() {
 
       <div className="lg:block hidden">
         <div className="ml-100">
-          <DotsPager page={activeDot} count={9} onChange={setActiveDot} />
+          <DotsPager page={activeDot} count={9} onChange={handleChangePage} />
         </div>
       </div>
 
       <div className="lg:hidden ">
         <div className="ml-2">
-          <DotsPager page={activeDot} count={9} onChange={setActiveDot} />
+          <DotsPager page={activeDot} count={9} onChange={handleChangePage} />
         </div>
       </div>
 
