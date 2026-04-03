@@ -8,13 +8,14 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Input from "../components/Input";
 import { FaSearch } from "react-icons/fa";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function Product() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, _] = useSearchParams();
+  const navigate = useNavigate();
 
   const page = Number(searchParams.get("page")) || 1;
-  const [activeDot, setActiveDot] = useState(page);
+  // const [activeDot, setActiveDot] = useState(page);
 
   const [filters, setFilters] = useState({
     search: "",
@@ -30,13 +31,7 @@ function Product() {
   });
 
   const handleChangePage = (newPage) => {
-    setActiveDot(newPage);
-
-    const path = window.location.pathname.replace(/\/+$/, "");
-
-    setSearchParams(
-      window.history.replaceState(null, "", `${path}?page=${newPage}`),
-    );
+    navigate(`/product?page=${newPage}`, { replace: true });
   };
 
   return (
@@ -98,7 +93,7 @@ function Product() {
             minPrice={0}
             maxPrice={700}
           />
-          <ProductCard page={activeDot} onChangePage={handleChangePage} />
+          <ProductCard page={page} onChangePage={handleChangePage} />
         </div>
       </div>
 
@@ -107,19 +102,19 @@ function Product() {
           Our <span className="text-[#8e6447]">Product</span>
         </h2>
         <div className="flex">
-          <ProductCard onChangePage={handleChangePage} page={activeDot} />
+          <ProductCard onChangePage={handleChangePage} page={page} />
         </div>
       </div>
 
       <div className="lg:block hidden">
         <div className="ml-100">
-          <DotsPager page={activeDot} count={9} onChange={handleChangePage} />
+          <DotsPager page={page} count={9} onChange={handleChangePage} />
         </div>
       </div>
 
       <div className="lg:hidden ">
         <div className="ml-2">
-          <DotsPager page={activeDot} count={9} onChange={handleChangePage} />
+          <DotsPager page={page} count={9} onChange={handleChangePage} />
         </div>
       </div>
 
