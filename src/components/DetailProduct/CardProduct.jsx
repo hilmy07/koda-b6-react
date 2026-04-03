@@ -36,7 +36,7 @@ function CardProduct({ limit = 3, excludeId = null }) {
               style={{ backgroundImage: `url(${prod.image})` }}
             ></div>
           </Link>
-          <div className="absolute top-70 left-2 w-80 h-50 bg-white z-10 px-2 shadow-md border border-transparent">
+          <div className="absolute top-70 left-2 w-80 h-55 bg-white z-10 px-2 shadow-md border border-transparent">
             <Link to={`/product/${prod.id}`}>
               <p className="text-[#0b132a] text-2xl hover:underline cursor-pointer">
                 {prod.name_product}
