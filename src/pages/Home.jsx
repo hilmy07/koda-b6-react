@@ -8,7 +8,6 @@ import home6 from "../assets/home6.png";
 import home8 from "../assets/home8.png";
 import checklist from "../assets/checklist.png";
 import { CardProduct, CardProductMobile } from "../components/Home/CardProduct";
-// import CardProductMobile from "../components/Home/CardProductMobile";
 import ChatWidget from "../components/Home/ChatWidget";
 import http from "../lib/http";
 
