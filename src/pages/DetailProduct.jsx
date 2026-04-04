@@ -53,8 +53,8 @@ function DetailTop({ thumbnails }) {
 
         setProduct(p);
 
-        setSize(p.sizes?.[0] || "");
-        setTemp(p.variants?.[0] || "");
+        // setSize(p.sizes?.[0] || "");
+        // setTemp(p.variants?.[0] || "");
       } catch (err) {
         console.error("Error fetch product:", err);
       }
@@ -84,7 +84,6 @@ function DetailTop({ thumbnails }) {
 
   if (!product) return <p className="text-center mt-20">Loading...</p>;
 
-  // ✅ gambar utama dari backend + override thumbnail
   const mainImage = selectedImage ?? product.images?.[0];
 
   return (
@@ -99,7 +98,6 @@ function DetailTop({ thumbnails }) {
           />
         </div>
 
-        {/* ✅ thumbnails tetap dari props */}
         <div className="mt-4 grid grid-cols-3 gap-4">
           {thumbnails.map((src, i) => (
             <button
