@@ -248,9 +248,9 @@ export default function DetailProduct() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await http(`/product?page=${page}`);
+        const res = await http(`/products`);
 
-        setProducts(res.products);
+        setProducts(res.data);
       } catch (err) {
         console.log(err);
       }
