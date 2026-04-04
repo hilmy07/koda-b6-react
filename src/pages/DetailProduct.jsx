@@ -244,10 +244,15 @@ export default function DetailProduct() {
 
   // ambil semua product json
   useEffect(() => {
-    fetch("/data/products.json")
-      .then((res) => res.json())
-      .then((data) => setProducts(data))
-      .catch((err) => console.log(err));
+    (async () => {
+      try {
+        const res = await http("/products");
+
+        setProducts(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
   }, []);
 
   // ✅ product TIDAK perlu state lagi
