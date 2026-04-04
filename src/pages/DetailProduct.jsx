@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CardProduct from "../components/DetailProduct/CardProduct";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -32,7 +32,7 @@ const imageMap = {
 // ============================
 function DetailTop({ thumbnails }) {
   const { id } = useParams();
-  const [searchParams, _] = useSearchParams();
+  // const [searchParams, _] = useSearchParams();
 
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -45,12 +45,12 @@ function DetailTop({ thumbnails }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const page = Number(searchParams.get("page")) || 1;
+  // const page = Number(searchParams.get("page")) || 1;
 
   useEffect(() => {
     const fetchDetail = async () => {
       try {
-        const res = await http(`/product?page=${page}/${id}`);
+        const res = await http(`/produc/${id}`);
 
         const p = res.data;
 
@@ -64,7 +64,7 @@ function DetailTop({ thumbnails }) {
     };
 
     fetchDetail();
-  }, [id, page]);
+  }, [id]);
 
   const handleAddToCart = () => {
     if (!isLoggedIn) {
