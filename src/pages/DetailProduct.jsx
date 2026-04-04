@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import CardProduct from "../components/DetailProduct/CardProduct";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -30,8 +30,9 @@ const imageMap = {
 // ============================
 // DetailTop
 // ============================
-function DetailTop({ thumbnails, page }) {
+function DetailTop({ thumbnails }) {
   const { id } = useParams();
+  const [searchParams, _] = useSearchParams();
 
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -43,6 +44,8 @@ function DetailTop({ thumbnails, page }) {
   const { isLoggedIn } = useContext(AuthContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const page = Number(searchParams.get("page")) || 1;
 
   useEffect(() => {
     const fetchDetail = async () => {
