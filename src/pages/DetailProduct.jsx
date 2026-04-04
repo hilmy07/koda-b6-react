@@ -236,7 +236,7 @@ function DetailTop({ thumbnails }) {
 // ============================
 // DetailProduct
 // ============================
-export default function DetailProduct() {
+export default function DetailProduct({ page }) {
   const [activeDot, setActiveDot] = useState(1);
   const { id } = useParams();
 
@@ -246,14 +246,14 @@ export default function DetailProduct() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await http("/products");
+        const res = await http(`/product?page=${page}`);
 
         setProducts(res.data);
       } catch (err) {
         console.log(err);
       }
     })();
-  }, []);
+  }, [page]);
 
   // ✅ product TIDAK perlu state lagi
   const product = useMemo(() => {
