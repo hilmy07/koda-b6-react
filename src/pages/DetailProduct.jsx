@@ -44,7 +44,7 @@ function DetailTop({ thumbnails }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchDetail = async () => {
+    const fetchDetail = async (id) => {
       try {
         const res = await http(`/product/${id}`);
 
@@ -57,7 +57,7 @@ function DetailTop({ thumbnails }) {
       }
     };
 
-    fetchDetail();
+    fetchDetail(id);
   }, [id]);
 
   const handleAddToCart = () => {

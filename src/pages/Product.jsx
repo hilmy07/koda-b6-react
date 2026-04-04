@@ -15,7 +15,6 @@ function Product() {
   const navigate = useNavigate();
 
   const page = Number(searchParams.get("page")) || 1;
-  // const [activeDot, setActiveDot] = useState(page);
 
   const [filters, setFilters] = useState({
     search: "",
