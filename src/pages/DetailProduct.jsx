@@ -30,7 +30,7 @@ const imageMap = {
 // ============================
 // DetailTop
 // ============================
-function DetailTop({ thumbnails }) {
+function DetailTop({ thumbnails, page }) {
   const { id } = useParams();
 
   const [product, setProduct] = useState(null);
@@ -47,7 +47,7 @@ function DetailTop({ thumbnails }) {
   useEffect(() => {
     const fetchDetail = async () => {
       try {
-        const res = await http(`/product/${id}`);
+        const res = await http(`/product?page=${page}/${id}`);
 
         const p = res.data;
 
@@ -61,7 +61,7 @@ function DetailTop({ thumbnails }) {
     };
 
     fetchDetail();
-  }, [id]);
+  }, [id, page]);
 
   const handleAddToCart = () => {
     if (!isLoggedIn) {
