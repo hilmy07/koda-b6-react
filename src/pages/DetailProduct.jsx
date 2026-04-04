@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CardProduct from "../components/DetailProduct/CardProduct";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -11,54 +11,24 @@ import product3 from "../assets/product3.png";
 import product4 from "../assets/product4.png";
 import product5 from "../assets/product5.png";
 import product6 from "../assets/product6.png";
+
 import { useDispatch } from "react-redux";
 import { AuthContext } from "../context/AuthContext";
 import { addToCart } from "../redux/slice/cartSlice";
 import http from "../lib/http";
 
-// mapping gambar dari json -> import
-const imageMap = {
-  "product1.png": product1,
-  "product2.png": product2,
-  "product3.png": product3,
-  "product4.png": product4,
-  "product5.png": product5,
-  "product6.png": product6,
-};
-
-// ============================
-// DetailTop
-// ============================
-function DetailTop({ thumbnails }) {
-  const { id } = useParams();
-
-  const [product, setProduct] = useState(null);
+function DetailTop({ product, thumbnails }) {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const [qty, setQty] = useState(1);
-  const [size, setSize] = useState("");
-  const [temp, setTemp] = useState("");
+  const [size, setSize] = useState(product?.sizes?.[0] || "");
+  const [temp, setTemp] = useState(product?.variants?.[0] || "");
 
   const { isLoggedIn } = useContext(AuthContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchDetail = async () => {
-      try {
-        const res = await http(`/product/${id}`);
-
-        setProduct(res.data);
-
-        setSize(res.sizes?.[0] || "");
-        setTemp(res.variants?.[0] || "");
-      } catch (err) {
-        console.error("Error fetch product:", err);
-      }
-    };
-
-    fetchDetail();
-  }, [id]);
+  const mainImage = selectedImage ?? thumbnails[0];
 
   const handleAddToCart = () => {
     if (!isLoggedIn) {
@@ -71,17 +41,13 @@ function DetailTop({ thumbnails }) {
         id: product.id,
         name: product.name_product,
         price: product.base_price,
-        image: product.images?.[0],
+        image: mainImage,
         qty,
         size,
         temp,
       }),
     );
   };
-
-  if (!product) return <p className="text-center mt-20">Loading...</p>;
-
-  const mainImage = selectedImage ?? product.images?.[0];
 
   return (
     <section className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 px-6 mt-35">
@@ -99,7 +65,6 @@ function DetailTop({ thumbnails }) {
           {thumbnails.map((src, i) => (
             <button
               key={i}
-              type="button"
               onClick={() => setSelectedImage(src)}
               className={`h-28 overflow-hidden border ${
                 mainImage === src ? "border-orange-500" : "border-zinc-200"
@@ -107,7 +72,7 @@ function DetailTop({ thumbnails }) {
             >
               <img
                 src={src}
-                alt={`thumb-${i + 1}`}
+                alt={`thumb-${i}`}
                 className="w-full h-full object-cover"
               />
             </button>
@@ -115,175 +80,108 @@ function DetailTop({ thumbnails }) {
         </div>
       </div>
 
-      {/* RIGHT CONTENT */}
+      {/* RIGHT */}
       <div>
-        <span className="inline-block bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+        <span className="bg-red-600 text-white text-xs px-3 py-1 rounded-full">
           FLASH SALE!
         </span>
 
-        {/* NAME */}
         <h1 className="mt-3 text-4xl font-semibold">{product.name_product}</h1>
 
-        {/* PRICE */}
-        <div className="mt-2 flex items-baseline gap-4">
+        <div className="mt-2">
           <span className="text-orange-500 text-2xl font-bold">
             IDR {product.base_price.toLocaleString()}
           </span>
         </div>
 
-        {/* RATING */}
-        <div className="mt-3 flex items-center gap-2 text-sm">
-          <div className="flex gap-1 text-amber-500">
-            {Array.from({ length: product.rating }).map((_, i) => (
-              <span key={i}>★</span>
-            ))}
-          </div>
-          <span className="text-zinc-500">{product.rating}.0</span>
-          <span className="text-zinc-500">• {product.review_count} Review</span>
-        </div>
-
-        {/* DESCRIPTION */}
-        <p className="mt-3 text-zinc-600 text-sm leading-relaxed">
-          {product.description}
-        </p>
+        <p className="mt-3 text-zinc-600 text-sm">{product.description}</p>
 
         {/* QTY */}
-        <div className="mt-4">
-          <div className="inline-flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setQty((q) => Math.max(1, q - 1))}
-              className="w-8 h-8 border rounded"
-            >
-              −
-            </button>
-            <span className="w-10 text-center">{qty}</span>
-            <button
-              type="button"
-              onClick={() => setQty((q) => q + 1)}
-              className="w-8 h-8 bg-orange-500 text-white rounded"
-            >
-              +
-            </button>
-          </div>
+        <div className="mt-4 flex gap-2 items-center">
+          <button onClick={() => setQty((q) => Math.max(1, q - 1))}>-</button>
+          <span>{qty}</span>
+          <button onClick={() => setQty((q) => q + 1)}>+</button>
         </div>
 
         {/* SIZE */}
-        <div className="mt-6">
-          <p className="font-medium mb-2">Choose Size</p>
-          <div className="grid grid-cols-3 gap-4">
-            {product.sizes.map((val) => (
-              <button
-                key={val}
-                type="button"
-                onClick={() => setSize(val)}
-                className={`h-11 border rounded ${
-                  size === val
-                    ? "border-orange-500 text-orange-600"
-                    : "border-zinc-300"
-                }`}
-              >
-                {val}
+        <div className="mt-4">
+          <p>Size</p>
+          <div className="flex gap-2">
+            {product.sizes?.map((s) => (
+              <button key={s} onClick={() => setSize(s)}>
+                {s}
               </button>
             ))}
           </div>
         </div>
 
         {/* VARIANT */}
-        <div className="mt-6">
-          <p className="font-medium mb-2">Hot / Ice</p>
-          <div className="grid grid-cols-2 gap-4">
-            {product.variants.map((val) => (
-              <button
-                key={val}
-                type="button"
-                onClick={() => setTemp(val)}
-                className={`h-11 border rounded ${
-                  temp === val
-                    ? "border-orange-500 text-orange-600"
-                    : "border-zinc-300"
-                }`}
-              >
-                {val}
+        <div className="mt-4">
+          <p>Variant</p>
+          <div className="flex gap-2">
+            {product.variants?.map((v) => (
+              <button key={v} onClick={() => setTemp(v)}>
+                {v}
               </button>
             ))}
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="mt-6 grid grid-cols-2 gap-4">
-          <button
-            type="button"
-            className="h-12 rounded bg-orange-500 text-white hover:bg-orange-600"
-            onClick={() => navigate("/checkout")}
-          >
-            Buy
-          </button>
-
-          <button
-            type="button"
-            className="h-12 rounded border border-orange-400 text-orange-500 hover:bg-orange-50"
-            onClick={handleAddToCart}
-          >
-            Add to Cart
-          </button>
+        <div className="mt-6 flex gap-4">
+          <button onClick={() => navigate("/checkout")}>Buy</button>
+          <button onClick={handleAddToCart}>Add to Cart</button>
         </div>
       </div>
     </section>
   );
 }
 
-// ============================
-// DetailProduct
-// ============================
 export default function DetailProduct() {
   const [activeDot, setActiveDot] = useState(1);
   const { id } = useParams();
-  const [searchParams, _] = useSearchParams();
 
   const [products, setProducts] = useState([]);
-  const page = Number(searchParams.get("page")) || 1;
 
-  // ambil semua product json
   useEffect(() => {
     (async () => {
       try {
         const res = await http(`/products`);
-
-        setProducts(res.data);
+        setProducts(res.data || []);
       } catch (err) {
         console.log(err);
       }
     })();
-  }, [page]);
+  }, []);
 
-  // ✅ product TIDAK perlu state lagi
   const product = useMemo(() => {
+    if (!Array.isArray(products)) return null;
     return products.find((p) => p.id === Number(id));
   }, [products, id]);
 
-  // thumbnail bawah (ambil 3 produk lain selain yg sedang dibuka)
   const thumbnails = useMemo(() => {
-    return products
-      .filter((p) => p.id !== Number(id))
-      .slice(0, 3)
-      .map((p) => imageMap[p.image]);
-  }, [products, id]);
+    const allImages = [
+      product1,
+      product2,
+      product3,
+      product4,
+      product5,
+      product6,
+    ];
+
+    return allImages.slice(0, 3);
+  }, []);
 
   if (!product) return <p className="mt-10 text-center">Loading...</p>;
 
   return (
     <>
-      {/* <NavbarProduct /> */}
       <Navbar variant="dark" />
 
       <DetailTop product={product} thumbnails={thumbnails} />
 
-      <div>
-        <h2 className="text-5xl font-semibold mt-20 mb-7 ml-52">
-          Recommendation <span className="text-[#8e6447]">For You</span>
-        </h2>
-      </div>
+      <h2 className="text-5xl font-semibold mt-20 mb-7 ml-52">
+        Recommendation <span className="text-[#8e6447]">For You</span>
+      </h2>
 
       <div className="mb-50">
         <CardProduct limit={3} excludeId={id} />
