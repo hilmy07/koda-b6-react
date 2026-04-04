@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import CardProduct from "../components/DetailProduct/CardProduct";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -236,11 +236,13 @@ function DetailTop({ thumbnails }) {
 // ============================
 // DetailProduct
 // ============================
-export default function DetailProduct({ page }) {
+export default function DetailProduct() {
   const [activeDot, setActiveDot] = useState(1);
   const { id } = useParams();
+  const [searchParams, _] = useSearchParams();
 
   const [products, setProducts] = useState([]);
+  const page = Number(searchParams.get("page")) || 1;
 
   // ambil semua product json
   useEffect(() => {
