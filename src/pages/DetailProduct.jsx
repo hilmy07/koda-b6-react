@@ -11,7 +11,6 @@ import product3 from "../assets/product3.png";
 import product4 from "../assets/product4.png";
 import product5 from "../assets/product5.png";
 import product6 from "../assets/product6.png";
-// import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { AuthContext } from "../context/AuthContext";
 import { addToCart } from "../redux/slice/cartSlice";
@@ -32,7 +31,6 @@ const imageMap = {
 // ============================
 function DetailTop({ thumbnails }) {
   const { id } = useParams();
-  // const [searchParams, _] = useSearchParams();
 
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -45,19 +43,17 @@ function DetailTop({ thumbnails }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const page = Number(searchParams.get("page")) || 1;
-
   useEffect(() => {
     const fetchDetail = async () => {
       try {
-        const res = await http(`/produc/${id}`);
+        const res = await http(`/product/${id}`);
 
         const p = res.data;
 
         setProduct(p);
 
-        // setSize(p.sizes?.[0] || "");
-        // setTemp(p.variants?.[0] || "");
+        setSize(p.sizes?.[0] || "");
+        setTemp(p.variants?.[0] || "");
       } catch (err) {
         console.error("Error fetch product:", err);
       }
