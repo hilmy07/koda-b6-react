@@ -47,9 +47,7 @@ function DetailTop({ thumbnails }) {
   useEffect(() => {
     const fetchDetail = async () => {
       try {
-        const res = await http(
-          `https://hilmy-backend.camps.fahrul.id/product/${id}`,
-        );
+        const res = await http(`/product/${id}`);
 
         const p = res.data;
 
