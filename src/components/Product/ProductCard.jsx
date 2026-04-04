@@ -3,6 +3,7 @@ import cart from "../../assets/ShoppingCart.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/slice/cartSlice";
+import http from "../../lib/http";
 
 function ProductCard({ page }) {
   const dispatch = useDispatch();
@@ -21,12 +22,12 @@ function ProductCard({ page }) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(
+        const res = await http(
           `https://hilmy-backend.camps.fahrul.id/product?page=${page}`,
         );
-        const data = await res.json();
+        // const data = await res.json();
 
-        setProducts(data.products);
+        setProducts(res.products);
       } catch (err) {
         console.error(err);
       }

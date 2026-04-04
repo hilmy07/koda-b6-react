@@ -48,12 +48,10 @@ function DetailTop({ thumbnails }) {
       try {
         const res = await http(`/product/${id}`);
 
-        const p = res.data;
+        setProduct(res.data);
 
-        setProduct(p);
-
-        setSize(p.sizes?.[0] || "");
-        setTemp(p.variants?.[0] || "");
+        setSize(res.sizes?.[0] || "");
+        setTemp(res.variants?.[0] || "");
       } catch (err) {
         console.error("Error fetch product:", err);
       }
