@@ -11,12 +11,15 @@ import product3 from "../assets/product3.png";
 import product4 from "../assets/product4.png";
 import product5 from "../assets/product5.png";
 import product6 from "../assets/product6.png";
+
 import { useDispatch } from "react-redux";
 import { AuthContext } from "../context/AuthContext";
 import { addToCart } from "../redux/slice/cartSlice";
 import http from "../lib/http";
 
-// mapping gambar dari json -> import
+// ============================
+// mapping thumbnail (JSON lokal)
+// ============================
 const imageMap = {
   "product1.png": product1,
   "product2.png": product2,
@@ -27,7 +30,7 @@ const imageMap = {
 };
 
 // ============================
-// DetailTop
+// DetailTop (FETCH API)
 // ============================
 function DetailTop({ thumbnails }) {
   const { id } = useParams();
@@ -44,20 +47,21 @@ function DetailTop({ thumbnails }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchDetail = async (id) => {
+    const fetchDetail = async () => {
       try {
         const res = await http(`/product/${id}`);
 
-        setProduct(res.data);
+        const productData = res.data;
 
-        setSize(res.sizes?.[0] || "");
-        setTemp(res.variants?.[0] || "");
+        setProduct(productData);
+        setSize(productData.sizes?.[0] || "");
+        setTemp(productData.variants?.[0] || "");
       } catch (err) {
         console.error("Error fetch product:", err);
       }
     };
 
-    fetchDetail(id);
+    fetchDetail();
   }, [id]);
 
   const handleAddToCart = () => {
@@ -95,6 +99,7 @@ function DetailTop({ thumbnails }) {
           />
         </div>
 
+        {/* THUMBNAIL (JSON LOKAL) */}
         <div className="mt-4 grid grid-cols-3 gap-4">
           {thumbnails.map((src, i) => (
             <button
@@ -121,20 +126,18 @@ function DetailTop({ thumbnails }) {
           FLASH SALE!
         </span>
 
-        {/* NAME */}
         <h1 className="mt-3 text-4xl font-semibold">{product.name_product}</h1>
 
-        {/* PRICE */}
         <div className="mt-2 flex items-baseline gap-4">
           <span className="text-orange-500 text-2xl font-bold">
-            IDR {product.base_price.toLocaleString()}
+            IDR {product.base_price?.toLocaleString()}
           </span>
         </div>
 
         {/* RATING */}
         <div className="mt-3 flex items-center gap-2 text-sm">
           <div className="flex gap-1 text-amber-500">
-            {Array.from({ length: product.rating }).map((_, i) => (
+            {Array.from({ length: product.rating || 0 }).map((_, i) => (
               <span key={i}>★</span>
             ))}
           </div>
@@ -151,7 +154,6 @@ function DetailTop({ thumbnails }) {
         <div className="mt-4">
           <div className="inline-flex items-center gap-2">
             <button
-              type="button"
               onClick={() => setQty((q) => Math.max(1, q - 1))}
               className="w-8 h-8 border rounded"
             >
@@ -159,7 +161,6 @@ function DetailTop({ thumbnails }) {
             </button>
             <span className="w-10 text-center">{qty}</span>
             <button
-              type="button"
               onClick={() => setQty((q) => q + 1)}
               className="w-8 h-8 bg-orange-500 text-white rounded"
             >
@@ -172,10 +173,9 @@ function DetailTop({ thumbnails }) {
         <div className="mt-6">
           <p className="font-medium mb-2">Choose Size</p>
           <div className="grid grid-cols-3 gap-4">
-            {product.sizes.map((val) => (
+            {product.sizes?.map((val) => (
               <button
                 key={val}
-                type="button"
                 onClick={() => setSize(val)}
                 className={`h-11 border rounded ${
                   size === val
@@ -193,10 +193,9 @@ function DetailTop({ thumbnails }) {
         <div className="mt-6">
           <p className="font-medium mb-2">Hot / Ice</p>
           <div className="grid grid-cols-2 gap-4">
-            {product.variants.map((val) => (
+            {product.variants?.map((val) => (
               <button
                 key={val}
-                type="button"
                 onClick={() => setTemp(val)}
                 className={`h-11 border rounded ${
                   temp === val
@@ -213,16 +212,14 @@ function DetailTop({ thumbnails }) {
         {/* CTA */}
         <div className="mt-6 grid grid-cols-2 gap-4">
           <button
-            type="button"
-            className="h-12 rounded bg-orange-500 text-white hover:bg-orange-600"
+            className="h-12 rounded bg-orange-500 text-white"
             onClick={() => navigate("/checkout")}
           >
             Buy
           </button>
 
           <button
-            type="button"
-            className="h-12 rounded border border-orange-400 text-orange-500 hover:bg-orange-50"
+            className="h-12 rounded border border-orange-400 text-orange-500"
             onClick={handleAddToCart}
           >
             Add to Cart
@@ -234,7 +231,7 @@ function DetailTop({ thumbnails }) {
 }
 
 // ============================
-// DetailProduct
+// PARENT (thumbnail dari JSON)
 // ============================
 export default function DetailProduct() {
   const [activeDot, setActiveDot] = useState(1);
@@ -242,7 +239,6 @@ export default function DetailProduct() {
 
   const [products, setProducts] = useState([]);
 
-  // ambil semua product json
   useEffect(() => {
     fetch("/data/products.json")
       .then((res) => res.json())
@@ -250,12 +246,6 @@ export default function DetailProduct() {
       .catch((err) => console.log(err));
   }, []);
 
-  // ✅ product TIDAK perlu state lagi
-  const product = useMemo(() => {
-    return products.find((p) => p.id === Number(id));
-  }, [products, id]);
-
-  // thumbnail bawah (ambil 3 produk lain selain yg sedang dibuka)
   const thumbnails = useMemo(() => {
     return products
       .filter((p) => p.id !== Number(id))
@@ -263,14 +253,13 @@ export default function DetailProduct() {
       .map((p) => imageMap[p.image]);
   }, [products, id]);
 
-  if (!product) return <p className="mt-10 text-center">Loading...</p>;
+  if (!products.length) return <p className="mt-10 text-center">Loading...</p>;
 
   return (
     <>
-      {/* <NavbarProduct /> */}
       <Navbar variant="dark" />
 
-      <DetailTop product={product} thumbnails={thumbnails} />
+      <DetailTop thumbnails={thumbnails} />
 
       <div>
         <h2 className="text-5xl font-semibold mt-20 mb-7 ml-52">
