@@ -51,7 +51,7 @@ function DetailTop({ thumbnails }) {
           `https://hilmy-backend.camps.fahrul.id/product/${id}`,
         );
 
-        const p = res.data.data;
+        const p = res.data;
 
         setProduct(p);
 
