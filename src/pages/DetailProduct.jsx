@@ -248,7 +248,7 @@ export default function DetailProduct({ page }) {
       try {
         const res = await http(`/product?page=${page}`);
 
-        setProducts(res.data);
+        setProducts(res.products);
       } catch (err) {
         console.log(err);
       }
