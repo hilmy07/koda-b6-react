@@ -22,9 +22,7 @@ function ProductCard({ page }) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await http(
-          `https://hilmy-backend.camps.fahrul.id/product?page=${page}`,
-        );
+        const res = await http(`/product?page=${page}`);
         // const data = await res.json();
 
         setProducts(res.products);
