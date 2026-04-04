@@ -128,6 +128,7 @@ function ProductCard({ page }) {
                 </div>
                 <div className="flex flex-col gap-1 mt-1">
                   <button
+                    type="button"
                     onClick={() => handleDetailProduct(prod.id)}
                     className="cursor-pointer px-10 py-2 bg-[#ff8906] rounded-sm text-black"
                   >
