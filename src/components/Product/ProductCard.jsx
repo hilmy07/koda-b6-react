@@ -74,13 +74,13 @@ function ProductCard({ page }) {
                 </div>
                 <div className="flex gap-1 mt-1">
                   <button
+                    type="button"
                     onClick={() => handleDetailProduct(prod.id)}
                     className="cursor-pointer px-40 py-2 bg-[#ff8906] rounded-sm text-black"
                   >
                     Buy
                   </button>
                   <button
-                    type="button"
                     onClick={() => handleAddToCart(prod)}
                     className="cursor-pointer px-4 py-1 rounded-sm text-black border-2 border-[#ff8906]"
                   >
