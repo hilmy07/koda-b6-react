@@ -244,18 +244,11 @@ export default function DetailProduct() {
 
   // ambil semua product json
   useEffect(() => {
-    const fetchDetail = async () => {
-      try {
-        const res = await http(`/product/${id}`);
-
-        setProducts(res.data);
-      } catch (err) {
-        console.error("Error fetch product:", err);
-      }
-    };
-
-    fetchDetail();
-  }, [id]);
+    fetch("/data/products.json")
+      .then((res) => res.json())
+      .then((data) => setProducts(data))
+      .catch((err) => console.log(err));
+  }, []);
 
   // ✅ product TIDAK perlu state lagi
   const product = useMemo(() => {
