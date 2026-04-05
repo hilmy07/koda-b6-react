@@ -31,8 +31,8 @@ function DetailTop({ product, thumbnails }) {
   const selectedTemp = temp || product.variants?.[0] || "";
 
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const userId = currentUser?.id;
-  console.log(userId);
+  // const userId = currentUser?.id;
+  // console.log(userId);
 
   const handleAddToCart = async () => {
     if (!isLoggedIn) {
@@ -61,11 +61,11 @@ function DetailTop({ product, thumbnails }) {
           quantity: qty,
           size: selectedSize,
           variant: selectedTemp,
-          user_id: userId,
+          user_id: currentUser.id,
           product_id: product.id,
         },
       });
-      console.log(userId);
+      // console.log(userId);
     } catch (err) {
       console.log(err);
       alert("Gagal sync ke server");
@@ -99,7 +99,7 @@ function DetailTop({ product, thumbnails }) {
           quantity: qty,
           size: selectedSize,
           variant: selectedTemp,
-          user_id: userId,
+          user_id: currentUser.id,
           product_id: product.id,
         },
       });
