@@ -32,6 +32,7 @@ function DetailTop({ product, thumbnails }) {
 
   const currentUser = useSelector((state) => state.auth.currentUser);
   const userId = currentUser?.id;
+  console.log(userId);
 
   const handleAddToCart = async () => {
     if (!isLoggedIn) {
