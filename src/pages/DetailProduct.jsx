@@ -54,16 +54,19 @@ function DetailTop({ product, thumbnails }) {
     try {
       // const token = localStorage.getItem("token");
 
-      await http("/cart/create-item", null, {
-        method: "POST",
-        body: {
+      await http(
+        "/cart/create-item",
+        {
           quantity: qty,
           size: selectedSize,
           variant: selectedTemp,
           user_id: userId,
           product_id: product.id,
         },
-      });
+        {
+          method: "POST",
+        },
+      );
     } catch (err) {
       console.log(err);
       alert("Gagal sync ke server");
@@ -91,17 +94,19 @@ function DetailTop({ product, thumbnails }) {
     try {
       // const user_id = localStorage.getItem("id");
 
-      await http("/cart/create-item", null, {
-        method: "POST",
-        body: {
+      await http(
+        "/cart/create-item",
+        {
           quantity: qty,
           size: selectedSize,
           variant: selectedTemp,
           user_id: userId,
           product_id: product.id,
         },
-      });
-
+        {
+          method: "POST",
+        },
+      );
       navigate("/checkout");
     } catch (err) {
       console.log(err);
