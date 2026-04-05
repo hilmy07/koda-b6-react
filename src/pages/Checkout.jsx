@@ -15,7 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearCart, removeFromCart } from "../redux/slice/cartSlice";
 
 function Checkout() {
-  const [delivery, setDelivery] = React.useState("dinein");
+  const [delivery, setDelivery] = React.useState({
+    key: "dinein",
+    label: "Dine In",
+  });
 
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart.items);
@@ -171,11 +174,11 @@ function Checkout() {
             { key: "door", label: "Door Delivery" },
             { key: "pickup", label: "Pick Up" },
           ].map((opt) => {
-            const active = delivery === opt.key;
+            const active = delivery.key === opt.key;
             return (
               <button
                 key={opt.key}
-                onClick={() => setDelivery(opt.key)}
+                onClick={() => setDelivery(opt)}
                 className={`px-4 py-2 border rounded ${
                   active ? "border-orange-500" : "border-zinc-300"
                 }`}
