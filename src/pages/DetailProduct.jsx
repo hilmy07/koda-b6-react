@@ -57,6 +57,7 @@ function DetailTop({ product, thumbnails }) {
 
       await http("/cart/create-item", null, {
         method: "POST",
+        token: currentUser?.token,
         body: {
           quantity: qty,
           size: selectedSize,
@@ -95,6 +96,7 @@ function DetailTop({ product, thumbnails }) {
 
       await http("/cart/create-item", null, {
         method: "POST",
+        token: currentUser?.token,
         body: {
           quantity: qty,
           size: selectedSize,
