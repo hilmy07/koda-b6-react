@@ -72,6 +72,7 @@ function Login() {
 
       dispatch(
         loginSuccess({
+          id: body.id,
           email: body.email,
           fullName: body.fullName,
           profileImg: body.profileImg,
