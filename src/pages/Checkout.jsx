@@ -25,7 +25,7 @@ function Checkout() {
       if (!currentUser?.[0]?.id) return;
 
       try {
-        const res = await http("/cart-user", null, {
+        const res = await http("/cart", null, {
           method: "POST",
           body: { user_id: currentUser[0].id },
         });
