@@ -13,17 +13,6 @@ import { FaUser, FaEnvelope } from "react-icons/fa";
 import { IoLocation } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, removeFromCart } from "../redux/slice/cartSlice";
-import product1 from "../assets/product1.png";
-import product2 from "../assets/product2.png";
-import product3 from "../assets/product3.png";
-import product4 from "../assets/product4.png";
-
-const images = {
-  "product1.png": product1,
-  "product2.png": product2,
-  "product3.png": product3,
-  "product4.png": product4,
-};
 
 function Checkout() {
   const [delivery, setDelivery] = React.useState("dinein");
@@ -31,25 +20,23 @@ function Checkout() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart.items);
 
-  const handleRemove = (id) => {
-    dispatch(removeFromCart(id));
+  // ✅ remove item FIX (id + size + temp)
+  const handleRemove = (item) => {
+    dispatch(removeFromCart(item));
   };
 
   const handleCheckout = () => {
+    console.log("CHECKOUT DATA:", items);
     dispatch(clearCart());
   };
 
-  function parsePrice(priceStr) {
-    // hapus "IDR" dan titik, ubah jadi number
-    return Number(priceStr.replace(/[^0-9]/g, ""));
-  }
-
+  // ✅ TOTAL (NO STRING, NO DISCOUNT)
   const orderTotal = items.reduce(
-    (sum, item) => sum + parsePrice(item.price) * (item.qty || 1),
+    (sum, item) => sum + item.price * (item.qty || 1),
     0,
   );
 
-  const tax = orderTotal * 0.1; // contoh 10% tax
+  const tax = orderTotal * 0.1;
   const subTotal = orderTotal + tax;
 
   return (
@@ -61,60 +48,38 @@ function Checkout() {
       </div>
 
       <section className="max-w-7xl mx-auto grid grid-cols-[60%_40%] gap-6 px-6 items-start">
-        {/* Kiri */}
-        <aside className="col-span-1">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-xl font-semibold">Your Order</h3>
-            <button className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm px-3 py-2 rounded">
-              <span className="text-lg leading-none">+</span> Add Menu
-            </button>
-          </div>
+        {/* LEFT - CART */}
+        <aside>
+          <h3 className="text-xl font-semibold mb-3">Your Order</h3>
 
           <div className="space-y-5 mt-10">
             {items.length > 0 ? (
-              items.map((item) => (
+              items.map((item, i) => (
                 <div
-                  key={item.id}
+                  key={i}
                   className="flex gap-4 border border-zinc-200 bg-[#fcf8f8] p-5 shadow-sm"
                 >
                   <img
-                    src={images[item.image] || product}
+                    src={item.image || product}
                     alt={item.name}
                     className="w-30 h-28 object-cover"
                   />
 
                   <div className="flex-1">
-                    {item.flashSale && (
-                      <span className="inline-block bg-red-600 text-white text-[10px] font-semibold px-2 py-1 rounded-full">
-                        FLASH SALE!
-                      </span>
-                    )}
+                    <h4 className="font-semibold">{item.name}</h4>
 
-                    <h4 className="mt-1 font-semibold">{item.name}</h4>
-
-                    <p className="mt-1 text-sm text-zinc-600">
-                      {item.qty}pcs <span className="mx-1">|</span> {item.size}{" "}
-                      <span className="mx-1">|</span> {item.ice ? "Ice" : "Hot"}{" "}
-                      <span className="mx-1">|</span> {item.type}
+                    <p className="text-sm text-zinc-600 mt-1">
+                      {item.qty} pcs | {item.size} | {item.temp}
                     </p>
 
-                    <div className="mt-2 flex items-baseline gap-3">
-                      {item.originalPrice && (
-                        <span className="text-zinc-400 line-through text-xs">
-                          IDR {item.originalPrice.toLocaleString()}
-                        </span>
-                      )}
-                      <span className="text-orange-500 font-semibold">
-                        IDR {item.price.toLocaleString()}
-                      </span>
-                    </div>
+                    <p className="text-orange-500 font-semibold mt-2">
+                      IDR {item.price.toLocaleString()}
+                    </p>
                   </div>
 
                   <button
-                    className="self-start text-red-500 hover:text-red-600 cursor-pointer"
-                    aria-label="Remove"
-                    title="Remove"
-                    onClick={() => handleRemove(item.id)}
+                    className="text-red-500 hover:text-red-600"
+                    onClick={() => handleRemove(item)}
                   >
                     ⨉
                   </button>
@@ -126,130 +91,98 @@ function Checkout() {
           </div>
         </aside>
 
-        {/* Kanan */}
-        <aside className="col-start-2 col-span-1">
+        {/* RIGHT - TOTAL */}
+        <aside>
           <h3 className="text-xl font-semibold mb-3">Total</h3>
 
-          <div className="border border-zinc-200 bg-[#fcf8f8] p-4 h-82.5 mt-12">
-            <div>
-              <div className="pb-2 flex items-center justify-between">
-                <span className="text-zinc-600">Order</span>
-                <span className="font-medium">
-                  IDR {orderTotal.toLocaleString()}
-                </span>
-              </div>
-              <div className="py-2 flex items-center justify-between">
-                <span className="text-zinc-600">Delivery</span>
-                <span className="font-medium">IDR 0</span>
-              </div>
-              <div className="py-2 flex items-center justify-between">
-                <span className="text-zinc-600">Tax</span>
-                <span className="font-medium">{tax.toLocaleString()}</span>
-              </div>
-              <hr className="border-0 h-px bg-[#e8e8e8]" />
-              <div className="py-2 flex items-center justify-between">
-                <span className="text-zinc-600">Sub Total</span>
-                <span className="font-semibold">
-                  {subTotal.toLocaleString()}
-                </span>
-              </div>
+          <div className="border border-zinc-200 bg-[#fcf8f8] p-4 mt-12">
+            <div className="flex justify-between py-1">
+              <span>Order</span>
+              <span>IDR {orderTotal.toLocaleString()}</span>
+            </div>
+
+            <div className="flex justify-between py-1">
+              <span>Delivery</span>
+              <span>IDR 0</span>
+            </div>
+
+            <div className="flex justify-between py-1">
+              <span>Tax</span>
+              <span>IDR {tax.toLocaleString()}</span>
+            </div>
+
+            <hr className="my-2" />
+
+            <div className="flex justify-between font-semibold py-1">
+              <span>Sub Total</span>
+              <span>IDR {subTotal.toLocaleString()}</span>
             </div>
 
             <button
               className="mt-3 w-full h-11 rounded bg-orange-500 hover:bg-orange-600 text-white font-medium"
-              onClick={() => {
-                handleCheckout();
-              }}
+              onClick={handleCheckout}
             >
               Checkout
             </button>
 
-            <div className="mt-2">
+            <div className="mt-3">
               <p className="text-sm text-zinc-600 mb-2">We Accept</p>
-              <div className="flex flex-nowrap items-center gap-4 opacity-80 overflow-x-auto">
-                <img src={bri} alt="BRI" className="h-4 w-auto shrink-0" />
-                <img src={dana} alt="Dana" className="h-4 w-auto shrink-0" />
-                <img src={bca} alt="BCA" className="h-4 w-auto shrink-0" />
-                <img src={gopay} alt="Gopay" className="h-4 w-auto shrink-0" />
-                <img src={ovo} alt="OVO" className="h-4 w-auto shrink-0" />
-                <img
-                  src={paypal}
-                  alt="PayPal"
-                  className="h-4 w-auto shrink-0"
-                />
+              <div className="flex gap-3 opacity-80">
+                <img src={bri} className="h-4" />
+                <img src={dana} className="h-4" />
+                <img src={bca} className="h-4" />
+                <img src={gopay} className="h-4" />
+                <img src={ovo} className="h-4" />
+                <img src={paypal} className="h-4" />
               </div>
-              <p className="mt-8 text-xs text-zinc-500">
-                *Get Discount if you pay with Bank Central Asia
-              </p>
             </div>
           </div>
         </aside>
       </section>
 
-      <div className="mt-0">
-        <h2 className="text-xl font-semibold my-10 ml-35">
-          Payment Info & Delivery
-        </h2>
+      {/* FORM */}
+      <div className="w-1/2 ml-36 mt-10">
+        <Input
+          label="Email"
+          type="email"
+          placeholder="Enter Your Email"
+          icon={<FaEnvelope />}
+        />
+        <Input
+          label="Fullname"
+          placeholder="Enter Your Fullname"
+          icon={<FaUser />}
+        />
+        <Input
+          label="Address"
+          placeholder="Enter Your Address"
+          icon={<IoLocation />}
+        />
       </div>
 
-      <div className="w-full">
-        <div className="w-1/2 ml-36">
-          <Input
-            label="Email"
-            type="email"
-            placeholder="Enter Your Email"
-            icon={<FaEnvelope />}
-          />
-        </div>
-        <div className="w-1/2 ml-36">
-          <Input
-            label="Fullname"
-            type="fullname"
-            placeholder="Enter Your Fullname"
-            icon={<FaUser />}
-          />
-        </div>
-        <div className="w-1/2 ml-36">
-          <Input
-            label="Address"
-            type="address"
-            placeholder="Enter Your Address"
-            icon={<IoLocation />}
-          />
-        </div>
-        <div>
-          <div>
-            <p className="pl-36 mt-5 text-sm font-medium text-gray-700">
-              Delivery
-            </p>
-          </div>
+      {/* DELIVERY */}
+      <div className="pl-36 mt-5">
+        <p className="text-sm font-medium text-gray-700">Delivery</p>
 
-          <div className="flex gap-4 pl-36 pr-154 mt-2">
-            {[
-              { key: "dinein", label: "Dine In" },
-              { key: "door", label: "Door Delivery" },
-              { key: "pickup", label: "Pick Up" },
-            ].map((opt) => {
-              const active = delivery === opt.key;
-              return (
-                <button
-                  key={opt.key}
-                  type="button"
-                  onClick={() => setDelivery(opt.key)}
-                  aria-pressed={active}
-                  className={`flex-1 h-11 rounded-lg border px-3 py-2 transition-colors
-                  ${
-                    active
-                      ? "bg-white border-orange-500 text-gray-700"
-                      : "bg-white border-[#dedede] text-gray-700 hover:bg-orange-50"
-                  }
-                  focus:outline-none focus:ring-2 focus:ring-orange-400`}
-                >
-                  {opt.label}
-                </button>
-              );
-            })}
-          </div>
+        <div className="flex gap-4 mt-2">
+          {[
+            { key: "dinein", label: "Dine In" },
+            { key: "door", label: "Door Delivery" },
+            { key: "pickup", label: "Pick Up" },
+          ].map((opt) => {
+            const active = delivery === opt.key;
+            return (
+              <button
+                key={opt.key}
+                onClick={() => setDelivery(opt.key)}
+                className={`px-4 py-2 border rounded ${
+                  active ? "border-orange-500" : "border-zinc-300"
+                }`}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
