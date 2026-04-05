@@ -117,7 +117,7 @@ function DetailTop({ thumbnails }) {
         {/* PRICE */}
         <div className="mt-2 flex items-baseline gap-4">
           <span className="text-orange-500 text-2xl font-bold">
-            IDR {product.base_price.toLocaleString()}
+            IDR {product.base_price}
           </span>
         </div>
 
