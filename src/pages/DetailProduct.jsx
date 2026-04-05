@@ -85,7 +85,7 @@ function DetailTop({ product, thumbnails }) {
         <h1 className="text-4xl font-semibold">{product.name_product}</h1>
 
         <p className="text-orange-500 text-2xl font-bold mt-2">
-          IDR {product.base_price.toLocaleString()}
+          IDR {product.base_price}
         </p>
 
         <p className="mt-3 text-zinc-600">{product.description}</p>
