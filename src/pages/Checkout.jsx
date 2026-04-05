@@ -26,7 +26,7 @@ function Checkout() {
 
       try {
         const res = await http("/cart-user", null, {
-          method: "GET",
+          method: "POST",
           body: { user_id: currentUser[0].id },
         });
 
