@@ -16,16 +16,6 @@ import { AuthContext } from "../context/AuthContext";
 import { addToCart } from "../redux/slice/cartSlice";
 import http from "../lib/http";
 
-// mapping gambar dari json -> import
-const imageMap = {
-  "product1.png": product1,
-  "product2.png": product2,
-  "product3.png": product3,
-  "product4.png": product4,
-  "product5.png": product5,
-  "product6.png": product6,
-};
-
 // ============================
 // DetailTop
 // ============================
@@ -259,16 +249,22 @@ export default function DetailProduct() {
 
   // ✅ product TIDAK perlu state lagi
   const product = useMemo(() => {
+    if (!Array.isArray(products)) return null;
     return products.find((p) => p.id === Number(id));
   }, [products, id]);
 
-  // thumbnail bawah (ambil 3 produk lain selain yg sedang dibuka)
   const thumbnails = useMemo(() => {
-    return products
-      .filter((p) => p.id !== Number(id))
-      .slice(0, 3)
-      .map((p) => imageMap[p.image]);
-  }, [products, id]);
+    const allImages = [
+      product1,
+      product2,
+      product3,
+      product4,
+      product5,
+      product6,
+    ];
+
+    return allImages.slice(0, 3);
+  }, []);
 
   if (!product) return <p className="mt-10 text-center">Loading...</p>;
 
