@@ -69,8 +69,7 @@ function Checkout() {
                     <h4 className="font-semibold">{item.name}</h4>
 
                     <p className="text-sm text-zinc-600 mt-1">
-                      {item.qty} pcs | {item.size} | {item.temp} |{" "}
-                      {item.delivery}
+                      {item.qty} pcs | {item.size} | {item.temp} | {delivery}
                     </p>
 
                     <p className="text-orange-500 font-semibold mt-2">
