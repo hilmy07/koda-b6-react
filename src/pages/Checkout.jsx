@@ -23,7 +23,6 @@ function Checkout() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart.items);
 
-  // ✅ remove item FIX (id + size + temp)
   const handleRemove = (item) => {
     dispatch(removeFromCart(item));
   };
@@ -32,8 +31,7 @@ function Checkout() {
     console.log("CHECKOUT DATA:", items);
     dispatch(clearCart());
   };
-
-  // ✅ TOTAL (NO STRING, NO DISCOUNT)
+  
   const orderTotal = items.reduce(
     (sum, item) => sum + item.price * (item.qty || 1),
     0,

@@ -29,44 +29,80 @@ function DetailTop({ product, thumbnails }) {
   const selectedSize = size || product.sizes?.[0] || "";
   const selectedTemp = temp || product.variants?.[0] || "";
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!isLoggedIn) {
       alert("Silakan login dulu untuk menambahkan ke keranjang.");
       return;
     }
 
-    dispatch(
-      addToCart({
-        id: product.id,
-        name: product.name_product,
-        price: product.base_price,
-        image: product.images?.[0],
-        qty,
-        size: selectedSize,
-        temp: selectedTemp,
-      }),
-    );
+    const payload = {
+      id: product.id,
+      name: product.name_product,
+      price: product.base_price,
+      image: product.images?.[0],
+      qty,
+      size: selectedSize,
+      temp: selectedTemp,
+    };
+
+    dispatch(addToCart(payload));
+
+    try {
+      const token = localStorage.getItem("token");
+
+      await http("/cart/create-item", null, {
+        method: "POST",
+        token,
+        body: {
+          quantity: qty,
+          size: selectedSize,
+          variant: selectedTemp,
+          product_id: product.id,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+      alert("Gagal sync ke server");
+    }
   };
 
-  const handleBuy = () => {
+  const handleBuy = async () => {
     if (!isLoggedIn) {
       alert("Silakan login dulu");
       return;
     }
 
-    dispatch(
-      addToCart({
-        id: product.id,
-        name: product.name_product,
-        price: product.base_price,
-        image: product.images?.[0],
-        qty,
-        size: selectedSize,
-        temp: selectedTemp,
-      }),
-    );
+    const payload = {
+      id: product.id,
+      name: product.name_product,
+      price: product.base_price,
+      image: product.images?.[0],
+      qty,
+      size: selectedSize,
+      temp: selectedTemp,
+    };
 
-    navigate("/checkout");
+    dispatch(addToCart(payload));
+
+    try {
+      const token = localStorage.getItem("token");
+
+      await http("/cart/create-item", null, {
+        method: "POST",
+        token,
+        body: {
+          quantity: qty,
+          size: selectedSize,
+          variant: selectedTemp,
+          product_id: product.id,
+        },
+      });
+
+      navigate("/checkout");
+    } catch (err) {
+      console.log(err);
+      alert("Gagal proses");
+    }
   };
 
   return (
