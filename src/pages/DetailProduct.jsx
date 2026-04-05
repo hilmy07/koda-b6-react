@@ -4,6 +4,7 @@ import CardProduct from "../components/DetailProduct/CardProduct";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import DotsPager from "../components/DotsPager";
+import { useSelector } from "react-redux";
 
 import product1 from "../assets/product1.png";
 import product2 from "../assets/product2.png";
@@ -29,6 +30,9 @@ function DetailTop({ product, thumbnails }) {
   const selectedSize = size || product.sizes?.[0] || "";
   const selectedTemp = temp || product.variants?.[0] || "";
 
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const userId = currentUser?.id;
+
   const handleAddToCart = async () => {
     if (!isLoggedIn) {
       alert("Silakan login dulu untuk menambahkan ke keranjang.");
@@ -48,16 +52,15 @@ function DetailTop({ product, thumbnails }) {
     dispatch(addToCart(payload));
 
     try {
-      const token = localStorage.getItem("token");
+      // const token = localStorage.getItem("token");
 
       await http("/cart/create-item", null, {
         method: "POST",
-        token,
         body: {
           quantity: qty,
           size: selectedSize,
           variant: selectedTemp,
-          user_id: token,
+          user_id: userId,
           product_id: product.id,
         },
       });
@@ -86,7 +89,7 @@ function DetailTop({ product, thumbnails }) {
     dispatch(addToCart(payload));
 
     try {
-      const user_id = localStorage.getItem("id");
+      // const user_id = localStorage.getItem("id");
 
       await http("/cart/create-item", null, {
         method: "POST",
@@ -94,7 +97,7 @@ function DetailTop({ product, thumbnails }) {
           quantity: qty,
           size: selectedSize,
           variant: selectedTemp,
-          user_id,
+          user_id: userId,
           product_id: product.id,
         },
       });
