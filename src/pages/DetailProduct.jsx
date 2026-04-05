@@ -86,16 +86,15 @@ function DetailTop({ product, thumbnails }) {
     dispatch(addToCart(payload));
 
     try {
-      const token = localStorage.getItem("token");
+      const user_id = localStorage.getItem("id");
 
       await http("/cart/create-item", null, {
         method: "POST",
-        token,
         body: {
           quantity: qty,
           size: selectedSize,
           variant: selectedTemp,
-          user_id: token,
+          user_id,
           product_id: product.id,
         },
       });
