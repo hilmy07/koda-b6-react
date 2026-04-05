@@ -87,7 +87,7 @@ function DetailTop({ product, thumbnails }) {
     try {
       const token = localStorage.getItem("token");
 
-      await http("/cart/create-item", null, {
+      const res = await http("/cart/create-item", null, {
         method: "POST",
         token,
         body: {
@@ -97,6 +97,8 @@ function DetailTop({ product, thumbnails }) {
           product_id: product.id,
         },
       });
+
+      console.log(res);
 
       navigate("/checkout");
     } catch (err) {
