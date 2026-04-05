@@ -57,6 +57,7 @@ function DetailTop({ product, thumbnails }) {
           quantity: qty,
           size: selectedSize,
           variant: selectedTemp,
+          user_id: token,
           product_id: product.id,
         },
       });
@@ -87,18 +88,17 @@ function DetailTop({ product, thumbnails }) {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await http("/cart/create-item", null, {
+      await http("/cart/create-item", null, {
         method: "POST",
         token,
         body: {
           quantity: qty,
           size: selectedSize,
           variant: selectedTemp,
+          user_id: token,
           product_id: product.id,
         },
       });
-
-      console.log(res);
 
       navigate("/checkout");
     } catch (err) {
