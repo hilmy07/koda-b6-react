@@ -14,9 +14,6 @@ import { AuthContext } from "../context/AuthContext";
 import { addToCart } from "../redux/slice/cartSlice";
 import http from "../lib/http";
 
-// ============================
-// DetailTop (NO FETCH)
-// ============================
 function DetailTop({ product, thumbnails }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [qty, setQty] = useState(1);
@@ -49,6 +46,27 @@ function DetailTop({ product, thumbnails }) {
         temp: selectedTemp,
       }),
     );
+  };
+
+  const handleBuy = () => {
+    if (!isLoggedIn) {
+      alert("Silakan login dulu");
+      return;
+    }
+
+    dispatch(
+      addToCart({
+        id: product.id,
+        name: product.name_product,
+        price: product.base_price,
+        image: product.images?.[0],
+        qty,
+        size: selectedSize,
+        temp: selectedTemp,
+      }),
+    );
+
+    navigate("/checkout");
   };
 
   return (
@@ -179,7 +197,7 @@ function DetailTop({ product, thumbnails }) {
           <button
             type="button"
             className="h-12 rounded bg-orange-500 text-white hover:bg-orange-600"
-            onClick={() => navigate("/checkout")}
+            onClick={handleBuy}
           >
             Buy
           </button>
@@ -197,9 +215,6 @@ function DetailTop({ product, thumbnails }) {
   );
 }
 
-// ============================
-// DetailProduct (FETCH 1x)
-// ============================
 export default function DetailProduct() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
