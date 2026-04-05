@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CardProduct from "../components/DetailProduct/CardProduct";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -8,23 +8,17 @@ import DotsPager from "../components/DotsPager";
 import product1 from "../assets/product1.png";
 import product2 from "../assets/product2.png";
 import product3 from "../assets/product3.png";
-import product4 from "../assets/product4.png";
-import product5 from "../assets/product5.png";
-import product6 from "../assets/product6.png";
+
 import { useDispatch } from "react-redux";
 import { AuthContext } from "../context/AuthContext";
 import { addToCart } from "../redux/slice/cartSlice";
 import http from "../lib/http";
 
 // ============================
-// DetailTop
+// DetailTop (NO FETCH)
 // ============================
-function DetailTop({ thumbnails }) {
-  const { id } = useParams();
-
-  const [product, setProduct] = useState(null);
+function DetailTop({ product, thumbnails }) {
   const [selectedImage, setSelectedImage] = useState(null);
-
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("");
   const [temp, setTemp] = useState("");
@@ -33,22 +27,10 @@ function DetailTop({ thumbnails }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchDetail = async () => {
-      try {
-        const res = await http(`/product/${id}`);
+  const mainImage = selectedImage ?? product.images?.[0];
 
-        setProduct(res.data);
-
-        setSize(res.sizes?.[0] || "");
-        setTemp(res.variants?.[0] || "");
-      } catch (err) {
-        console.error("Error fetch product:", err);
-      }
-    };
-
-    fetchDetail();
-  }, [id]);
+  const selectedSize = size || product.sizes?.[0] || "";
+  const selectedTemp = temp || product.variants?.[0] || "";
 
   const handleAddToCart = () => {
     if (!isLoggedIn) {
@@ -63,15 +45,11 @@ function DetailTop({ thumbnails }) {
         price: product.base_price,
         image: product.images?.[0],
         qty,
-        size,
-        temp,
+        size: selectedSize,
+        temp: selectedTemp,
       }),
     );
   };
-
-  if (!product) return <p className="text-center mt-20">Loading...</p>;
-
-  const mainImage = selectedImage ?? product.images?.[0];
 
   return (
     <section className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 px-6 mt-35">
@@ -111,17 +89,14 @@ function DetailTop({ thumbnails }) {
           FLASH SALE!
         </span>
 
-        {/* NAME */}
         <h1 className="mt-3 text-4xl font-semibold">{product.name_product}</h1>
 
-        {/* PRICE */}
         <div className="mt-2 flex items-baseline gap-4">
           <span className="text-orange-500 text-2xl font-bold">
-            IDR {product.base_price}
+            IDR {product.base_price.toLocaleString()}
           </span>
         </div>
 
-        {/* RATING */}
         <div className="mt-3 flex items-center gap-2 text-sm">
           <div className="flex gap-1 text-amber-500">
             {Array.from({ length: product.rating }).map((_, i) => (
@@ -132,7 +107,6 @@ function DetailTop({ thumbnails }) {
           <span className="text-zinc-500">• {product.review_count} Review</span>
         </div>
 
-        {/* DESCRIPTION */}
         <p className="mt-3 text-zinc-600 text-sm leading-relaxed">
           {product.description}
         </p>
@@ -168,7 +142,7 @@ function DetailTop({ thumbnails }) {
                 type="button"
                 onClick={() => setSize(val)}
                 className={`h-11 border rounded ${
-                  size === val
+                  selectedSize === val
                     ? "border-orange-500 text-orange-600"
                     : "border-zinc-300"
                 }`}
@@ -189,7 +163,7 @@ function DetailTop({ thumbnails }) {
                 type="button"
                 onClick={() => setTemp(val)}
                 className={`h-11 border rounded ${
-                  temp === val
+                  selectedTemp === val
                     ? "border-orange-500 text-orange-600"
                     : "border-zinc-300"
                 }`}
@@ -224,53 +198,32 @@ function DetailTop({ thumbnails }) {
 }
 
 // ============================
-// DetailProduct
+// DetailProduct (FETCH 1x)
 // ============================
 export default function DetailProduct() {
-  const [activeDot, setActiveDot] = useState(1);
   const { id } = useParams();
-  const [searchParams, _] = useSearchParams();
+  const [product, setProduct] = useState(null);
+  const [activeDot, setActiveDot] = useState(1);
 
-  const [products, setProducts] = useState([]);
-  const page = Number(searchParams.get("page")) || 1;
-
-  // ambil semua product json
   useEffect(() => {
     (async () => {
       try {
-        const res = await http(`/products`);
-
-        setProducts(res.data);
+        const res = await http(`/product/${id}`);
+        setProduct(res.data?.[0]);
       } catch (err) {
         console.log(err);
       }
     })();
-  }, [page]);
-
-  // ✅ product TIDAK perlu state lagi
-  const product = useMemo(() => {
-    if (!Array.isArray(products)) return null;
-    return products.find((p) => p.id === Number(id));
-  }, [products, id]);
+  }, [id]);
 
   const thumbnails = useMemo(() => {
-    const allImages = [
-      product1,
-      product2,
-      product3,
-      product4,
-      product5,
-      product6,
-    ];
-
-    return allImages.slice(0, 3);
+    return [product1, product2, product3];
   }, []);
 
   if (!product) return <p className="mt-10 text-center">Loading...</p>;
 
   return (
     <>
-      {/* <NavbarProduct /> */}
       <Navbar variant="dark" />
 
       <DetailTop product={product} thumbnails={thumbnails} />
@@ -286,6 +239,7 @@ export default function DetailProduct() {
       </div>
 
       <DotsPager page={activeDot} count={4} onChange={setActiveDot} />
+
       <Footer />
     </>
   );
