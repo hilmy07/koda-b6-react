@@ -55,6 +55,7 @@ function Login() {
         );
 
         console.log(data.email);
+        console.log(adminUser.email);
 
         navigate("/Dashboard");
         return;
