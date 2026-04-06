@@ -27,7 +27,7 @@ function Checkout() {
       try {
         const res = await http("/cart", null, {
           method: "POST",
-          body: { user_id: currentUser[0].id },
+          body: { user_id: currentUser.id },
         });
 
         if (res.success) {
