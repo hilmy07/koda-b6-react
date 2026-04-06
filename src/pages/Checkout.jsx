@@ -52,7 +52,7 @@ function Checkout() {
   };
 
   const orderTotal = items.reduce(
-    (sum, item) => sum + item.price * (item.qty || 1),
+    (sum, item) => sum + item.price * (item.quantity || 1),
     0,
   );
   const tax = orderTotal * 0.1;
@@ -85,7 +85,7 @@ function Checkout() {
                   <div className="flex-1">
                     <h4 className="font-semibold">{item.name}</h4>
                     <p className="text-sm text-zinc-600 mt-1">
-                      {item.qty} pcs | {item.size} | {item.temp} |{" "}
+                      {item.quantity} pcs | {item.size} | {item.variant} |{" "}
                       {delivery.label}
                     </p>
                     <p className="text-orange-500 font-semibold mt-2">
