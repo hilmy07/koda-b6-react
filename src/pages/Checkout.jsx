@@ -22,7 +22,7 @@ function Checkout() {
   // Ambil cart dari backend
   useEffect(() => {
     const fetchCart = async () => {
-      if (!currentUser?.[0]?.id) return;
+      if (!currentUser.id) return;
 
       try {
         const res = await http("/cart", null, {
