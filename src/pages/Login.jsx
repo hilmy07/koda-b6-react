@@ -54,6 +54,8 @@ function Login() {
           }),
         );
 
+        console.log(data.email);
+
         navigate("/Dashboard");
         return;
       }
