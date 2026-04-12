@@ -9,7 +9,7 @@ import gopay from "../assets/gopay.png";
 import ovo from "../assets/ovo.png";
 import paypal from "../assets/paypal.png";
 import Input from "../components/Input";
-import { FaUser, FaEnvelope } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaPhone } from "react-icons/fa";
 import { IoLocation } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import http from "../lib/http";
@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 
 function Checkout() {
   const [items, setItems] = useState([]);
+  // const [selectedId, setSelectedId] = useState(null);
   const token = useSelector((state) => state.auth.token);
 
   const { register, handleSubmit } = useForm();
@@ -93,7 +94,7 @@ function Checkout() {
   // CHECKOUT SUBMIT
   const onSubmit = async (data) => {
     const payload = {
-      cart_id: items[0]?.id, // ✅ dari item.id
+      cart_id: data.cart_id, // ✅ dari item.id
       total: subTotal,
       status: statusMap.pending, // ✅ 1
       fullname: data.fullname,
@@ -139,6 +140,12 @@ function Checkout() {
                     key={item.id}
                     className="flex gap-4 border border-zinc-200 bg-[#fcf8f8] p-5 shadow-sm"
                   >
+                    <input
+                      type="hidden"
+                      value={item.id}
+                      {...register("cart_id")}
+                    />
+
                     <img
                       src={item.image}
                       alt={item.name}
@@ -223,7 +230,7 @@ function Checkout() {
 
           <Input label="Fullname" {...register("fullname")} icon={<FaUser />} />
 
-          <Input label="Phone" {...register("phone")} icon={<FaUser />} />
+          <Input label="Phone" {...register("phone")} icon={<FaPhone />} />
 
           <Input
             label="Address"
