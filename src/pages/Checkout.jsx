@@ -56,7 +56,7 @@ function Checkout() {
           const mapped = res.data.map((item) => ({
             id: item.id,
             name: item.name_product,
-            price: item.base_price,
+            price: item.price,
             qty: item.quantity,
             size: item.size,
             temp: item.variant,
