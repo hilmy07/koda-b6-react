@@ -29,16 +29,13 @@ function Checkout() {
 
   const handleRemove = async (item) => {
     try {
-      await http(
-        "/cart-item",
-        {
-          cart_id: item.id, // kirim ke backend
+      await http("/cart-item", null, {
+        method: "DELETE",
+        token,
+        body: {
+          cart_id: item.id,
         },
-        {
-          method: "DELETE",
-          token: token,
-        },
-      );
+      });
 
       // update UI setelah sukses
       setItems((prev) => prev.filter((i) => i.id !== item.id));
