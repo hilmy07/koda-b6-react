@@ -94,13 +94,13 @@ function Checkout() {
   const onSubmit = async (data) => {
     const payload = {
       cart_id: items.map((item) => item.id), // ✅ dari item.id
+      total: subTotal,
+      status: statusMap.pending, // ✅ 1
       fullname: data.fullname,
-      email: data.email,
       phone: data.phone || "",
+      email: data.email,
       address: data.address,
       delivery: delivery.key,
-      status: statusMap.pending, // ✅ 1
-      total: subTotal,
     };
 
     try {
