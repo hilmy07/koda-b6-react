@@ -254,7 +254,7 @@ function Checkout() {
                 key={opt.key}
                 type="button"
                 onClick={() => setDelivery(opt)}
-                className={`px-18 py-2 border rounded ${
+                className={`px-22 py-2 border rounded ${
                   delivery.key === opt.key
                     ? "border-orange-500"
                     : "border-zinc-300"
