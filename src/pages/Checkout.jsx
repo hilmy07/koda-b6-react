@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import product from "../assets/product1.png";
@@ -12,19 +12,23 @@ import Input from "../components/Input";
 import { FaUser, FaEnvelope } from "react-icons/fa";
 import { IoLocation } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart, removeFromCart } from "../redux/slice/cartSlice";
+import { clearCart } from "../redux/slice/cartSlice";
+import http from "../utils/http";
 
 function Checkout() {
-  const [delivery, setDelivery] = React.useState({
+  const [items, setItems] = useState([]);
+  const token = useSelector((state) => state.auth.token);
+
+  const [delivery, setDelivery] = useState({
     key: "dinein",
     label: "Dine In",
   });
 
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.cart.items);
+  // const items = useSelector((state) => state.cart.items);
 
   const handleRemove = (item) => {
-    dispatch(removeFromCart(item));
+    setItems((prev) => prev.filter((i) => i.id !== item.id));
   };
 
   const handleCheckout = () => {
@@ -36,6 +40,40 @@ function Checkout() {
     (sum, item) => sum + item.price * (item.qty || 1),
     0,
   );
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const res = await http("/cart-user", null, {
+          method: "GET",
+          token: token,
+        });
+
+        console.log("DATA BACKEND:", res);
+
+        if (res.success) {
+          // mapping biar sesuai UI kamu
+          const mapped = res.data.map((item) => ({
+            id: item.id,
+            name: item.name_product,
+            price: item.base_price,
+            qty: item.quantity,
+            size: item.size,
+            temp: item.variant,
+            image: product, // fallback image
+          }));
+
+          setItems(mapped);
+        }
+      } catch (err) {
+        console.log("ERROR FETCH CART:", err);
+      }
+    };
+
+    if (token) {
+      fetchCart();
+    }
+  }, [token]);
 
   const tax = orderTotal * 0.1;
   const subTotal = orderTotal + tax;
