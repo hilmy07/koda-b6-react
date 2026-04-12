@@ -13,7 +13,7 @@ import { FaUser, FaEnvelope } from "react-icons/fa";
 import { IoLocation } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../redux/slice/cartSlice";
-import http from "../utils/http";
+import http from "../lib/http";
 
 function Checkout() {
   const [items, setItems] = useState([]);
