@@ -27,8 +27,24 @@ function Checkout() {
   const dispatch = useDispatch();
   // const items = useSelector((state) => state.cart.items);
 
-  const handleRemove = (item) => {
-    setItems((prev) => prev.filter((i) => i.id !== item.id));
+  const handleRemove = async (item) => {
+    try {
+      await http(
+        "/cart-item",
+        {
+          cart_id: item.id, // kirim ke backend
+        },
+        {
+          method: "DELETE",
+          token: token,
+        },
+      );
+
+      // update UI setelah sukses
+      setItems((prev) => prev.filter((i) => i.id !== item.id));
+    } catch (err) {
+      console.log("ERROR DELETE:", err);
+    }
   };
 
   const handleCheckout = () => {
@@ -54,7 +70,7 @@ function Checkout() {
         if (res.success) {
           // mapping biar sesuai UI kamu
           const mapped = res.data.map((item) => ({
-            id: item.id,
+            id: item.cart_id,
             name: item.name_product,
             price: item.price,
             qty: item.quantity,
