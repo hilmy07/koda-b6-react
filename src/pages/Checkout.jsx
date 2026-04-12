@@ -11,22 +11,30 @@ import paypal from "../assets/paypal.png";
 import Input from "../components/Input";
 import { FaUser, FaEnvelope } from "react-icons/fa";
 import { IoLocation } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../redux/slice/cartSlice";
+import { useSelector } from "react-redux";
 import http from "../lib/http";
+import { useForm } from "react-hook-form";
 
 function Checkout() {
   const [items, setItems] = useState([]);
   const token = useSelector((state) => state.auth.token);
+
+  const { register, handleSubmit } = useForm();
 
   const [delivery, setDelivery] = useState({
     key: "dinein",
     label: "Dine In",
   });
 
-  const dispatch = useDispatch();
-  // const items = useSelector((state) => state.cart.items);
+  // 🔥 STATUS MAP (1–4)
+  const statusMap = {
+    pending: 1,
+    onprogress: 2,
+    delivered: 3,
+    cancel: 4,
+  };
 
+  // REMOVE CART ITEM
   const handleRemove = async (item) => {
     try {
       await http("/cart-item", null, {
@@ -37,35 +45,22 @@ function Checkout() {
         },
       });
 
-      // update UI setelah sukses
       setItems((prev) => prev.filter((i) => i.id !== item.id));
     } catch (err) {
       console.log("ERROR DELETE:", err);
     }
   };
 
-  const handleCheckout = () => {
-    console.log("CHECKOUT DATA:", items);
-    dispatch(clearCart());
-  };
-
-  const orderTotal = items.reduce(
-    (sum, item) => sum + item.price * (item.qty || 1),
-    0,
-  );
-
+  // FETCH CART
   useEffect(() => {
     const fetchCart = async () => {
       try {
         const res = await http("/cart-user", null, {
           method: "GET",
-          token: token,
+          token,
         });
 
-        console.log("DATA BACKEND:", res);
-
         if (res.success) {
-          // mapping biar sesuai UI kamu
           const mapped = res.data.map((item) => ({
             id: item.cart_id,
             name: item.name_product,
@@ -73,7 +68,7 @@ function Checkout() {
             qty: item.quantity,
             size: item.size,
             temp: item.variant,
-            image: product, // fallback image
+            image: product,
           }));
 
           setItems(mapped);
@@ -83,13 +78,44 @@ function Checkout() {
       }
     };
 
-    if (token) {
-      fetchCart();
-    }
+    if (token) fetchCart();
   }, [token]);
+
+  // TOTAL
+  const orderTotal = items.reduce(
+    (sum, item) => sum + item.price * (item.qty || 1),
+    0,
+  );
 
   const tax = orderTotal * 0.1;
   const subTotal = orderTotal + tax;
+
+  // CHECKOUT SUBMIT
+  const onSubmit = async (data) => {
+    const payload = {
+      cart_id: items.map((item) => item.id), // ✅ dari item.id
+      fullname: data.fullname,
+      email: data.email,
+      phone: data.phone || "",
+      address: data.address,
+      delivery: delivery.key,
+      status: statusMap.pending, // ✅ 1
+      total: subTotal,
+    };
+
+    try {
+      const res = await http("/order", payload, {
+        method: "POST",
+        token,
+      });
+
+      console.log("ORDER SUCCESS:", res);
+
+      setItems([]);
+    } catch (err) {
+      console.log("CHECKOUT ERROR:", err);
+    }
+  };
 
   return (
     <>
@@ -99,88 +125,87 @@ function Checkout() {
         <h2 className="text-5xl font-semibold my-10 ml-35">Payment Details</h2>
       </div>
 
-      <section className="max-w-7xl mx-auto grid grid-cols-[60%_40%] gap-6 px-6 items-start">
-        {/* LEFT - CART */}
-        <aside>
-          <h3 className="text-xl font-semibold mb-3">Your Order</h3>
+      {/* FORM */}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <section className="max-w-7xl mx-auto grid grid-cols-[60%_40%] gap-6 px-6 items-start">
+          {/* LEFT CART */}
+          <aside>
+            <h3 className="text-xl font-semibold mb-3">Your Order</h3>
 
-          <div className="space-y-5 mt-10">
-            {items.length > 0 ? (
-              items.map((item, i) => (
-                <div
-                  key={i}
-                  className="flex gap-4 border border-zinc-200 bg-[#fcf8f8] p-5 shadow-sm"
-                >
-                  <img
-                    src={item.image || product}
-                    alt={item.name}
-                    className="w-30 h-28 object-cover"
-                  />
-
-                  <div className="flex-1">
-                    <h4 className="font-semibold">{item.name}</h4>
-
-                    <p className="text-sm text-zinc-600 mt-1">
-                      {item.qty} pcs | {item.size} | {item.temp} |{" "}
-                      {delivery.label}
-                    </p>
-
-                    <p className="text-orange-500 font-semibold mt-2">
-                      IDR {item.price.toLocaleString()}
-                    </p>
-                  </div>
-
-                  <button
-                    className="text-red-500 hover:text-red-600"
-                    onClick={() => handleRemove(item)}
+            <div className="space-y-5 mt-10">
+              {items.length > 0 ? (
+                items.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex gap-4 border border-zinc-200 bg-[#fcf8f8] p-5 shadow-sm"
                   >
-                    ⨉
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p className="text-center text-zinc-500">Cart is empty</p>
-            )}
-          </div>
-        </aside>
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-30 h-28 object-cover"
+                    />
 
-        {/* RIGHT - TOTAL */}
-        <aside>
-          <h3 className="text-xl font-semibold mb-3">Total</h3>
+                    <div className="flex-1">
+                      <h4 className="font-semibold">{item.name}</h4>
+                      <p className="text-sm text-zinc-600 mt-1">
+                        {item.qty} pcs | {item.size} | {item.temp} |{" "}
+                        {delivery.label}
+                      </p>
+                      <p className="text-orange-500 font-semibold mt-2">
+                        IDR {item.price.toLocaleString()}
+                      </p>
+                    </div>
 
-          <div className="border border-zinc-200 bg-[#fcf8f8] p-4 mt-12">
-            <div className="flex justify-between py-1">
-              <span>Order</span>
-              <span>IDR {orderTotal.toLocaleString()}</span>
+                    <button
+                      type="button"
+                      className="text-red-500"
+                      onClick={() => handleRemove(item)}
+                    >
+                      ⨉
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <p className="text-center text-zinc-500">Cart is empty</p>
+              )}
             </div>
+          </aside>
 
-            <div className="flex justify-between py-1">
-              <span>Delivery</span>
-              <span>IDR 0</span>
-            </div>
+          {/* RIGHT TOTAL */}
+          <aside>
+            <h3 className="text-xl font-semibold mb-3">Total</h3>
 
-            <div className="flex justify-between py-1">
-              <span>Tax</span>
-              <span>IDR {tax.toLocaleString()}</span>
-            </div>
+            <div className="border border-zinc-200 bg-[#fcf8f8] p-4 mt-12">
+              <div className="flex justify-between">
+                <span>Order</span>
+                <span>IDR {orderTotal.toLocaleString()}</span>
+              </div>
 
-            <hr className="my-2" />
+              <div className="flex justify-between">
+                <span>Delivery</span>
+                <span>IDR 0</span>
+              </div>
 
-            <div className="flex justify-between font-semibold py-1">
-              <span>Sub Total</span>
-              <span>IDR {subTotal.toLocaleString()}</span>
-            </div>
+              <div className="flex justify-between">
+                <span>Tax</span>
+                <span>IDR {tax.toLocaleString()}</span>
+              </div>
 
-            <button
-              className="mt-3 w-full h-11 rounded bg-orange-500 hover:bg-orange-600 text-white font-medium"
-              onClick={handleCheckout}
-            >
-              Checkout
-            </button>
+              <hr className="my-2" />
 
-            <div className="mt-3">
-              <p className="text-sm text-zinc-600 mb-2">We Accept</p>
-              <div className="flex gap-3 opacity-80">
+              <div className="flex justify-between font-semibold">
+                <span>Subtotal</span>
+                <span>IDR {subTotal.toLocaleString()}</span>
+              </div>
+
+              <button
+                type="submit"
+                className="mt-3 w-full h-11 bg-orange-500 text-white rounded"
+              >
+                Checkout
+              </button>
+
+              <div className="mt-3 flex gap-3 opacity-80">
                 <img src={bri} className="h-4" />
                 <img src={dana} className="h-4" />
                 <img src={bca} className="h-4" />
@@ -189,59 +214,52 @@ function Checkout() {
                 <img src={paypal} className="h-4" />
               </div>
             </div>
-          </div>
-        </aside>
-      </section>
+          </aside>
+        </section>
 
-      {/* FORM */}
-      <div className="w-1/2 ml-36 mt-10">
-        <Input
-          label="Email"
-          type="email"
-          placeholder="Enter Your Email"
-          icon={<FaEnvelope />}
-        />
-        <Input
-          label="Fullname"
-          placeholder="Enter Your Fullname"
-          icon={<FaUser />}
-        />
-        <Input
-          label="Address"
-          placeholder="Enter Your Address"
-          icon={<IoLocation />}
-        />
-      </div>
+        {/* FORM INPUT */}
+        <div className="w-1/2 ml-36 mt-10">
+          <Input label="Email" {...register("email")} icon={<FaEnvelope />} />
 
-      {/* DELIVERY */}
-      <div className="pl-36 mt-5">
-        <p className="text-sm font-medium text-gray-700">Delivery</p>
+          <Input label="Fullname" {...register("fullname")} icon={<FaUser />} />
 
-        <div className="flex gap-4 mt-2">
-          {[
-            { key: "dinein", label: "Dine In" },
-            { key: "door", label: "Door Delivery" },
-            { key: "pickup", label: "Pick Up" },
-          ].map((opt) => {
-            const active = delivery.key === opt.key;
-            return (
+          <Input label="Phone" {...register("phone")} icon={<FaUser />} />
+
+          <Input
+            label="Address"
+            {...register("address")}
+            icon={<IoLocation />}
+          />
+        </div>
+
+        {/* DELIVERY */}
+        <div className="pl-36 mt-5">
+          <p className="text-sm font-medium">Delivery</p>
+
+          <div className="flex gap-4 mt-2">
+            {[
+              { key: "dinein", label: "Dine In" },
+              { key: "door", label: "Door Delivery" },
+              { key: "pickup", label: "Pick Up" },
+            ].map((opt) => (
               <button
                 key={opt.key}
+                type="button"
                 onClick={() => setDelivery(opt)}
                 className={`px-4 py-2 border rounded ${
-                  active ? "border-orange-500" : "border-zinc-300"
+                  delivery.key === opt.key
+                    ? "border-orange-500"
+                    : "border-zinc-300"
                 }`}
               >
                 {opt.label}
               </button>
-            );
-          })}
+            ))}
+          </div>
         </div>
-      </div>
+      </form>
 
-      <div className="mt-20">
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 }
