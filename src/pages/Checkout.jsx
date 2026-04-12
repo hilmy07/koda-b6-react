@@ -94,7 +94,7 @@ function Checkout() {
   // CHECKOUT SUBMIT
   const onSubmit = async (data) => {
     const payload = {
-      cart_id: data.cart_id, // ✅ dari item.id
+      cart_id: items[0].id, // ✅ dari item.id
       total: subTotal,
       status: statusMap.pending, // ✅ 1
       fullname: data.fullname,
