@@ -104,6 +104,7 @@ function Checkout() {
       delivery: delivery.key,
     };
 
+    console.log(payload);
     try {
       const res = await http("/order", payload, {
         method: "POST",
