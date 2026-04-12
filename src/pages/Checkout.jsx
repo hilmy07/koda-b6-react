@@ -241,7 +241,7 @@ function Checkout() {
         </div>
 
         {/* DELIVERY */}
-        <div className="pl-36 my-5">
+        <div className="pl-36 mt-4 mb-12">
           <p className="text-sm font-medium">Delivery</p>
 
           <div className="flex gap-4 mt-2">
@@ -254,7 +254,7 @@ function Checkout() {
                 key={opt.key}
                 type="button"
                 onClick={() => setDelivery(opt)}
-                className={`px-12 py-2 border rounded ${
+                className={`px-24 py-2 border rounded ${
                   delivery.key === opt.key
                     ? "border-orange-500"
                     : "border-zinc-300"
